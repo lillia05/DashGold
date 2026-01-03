@@ -13,11 +13,16 @@
 </head>
 <body class="bg-gray-100 text-gray-800">
 
+    <div id="overlay" onclick="toggleSidebar()" class="fixed inset-0 bg-black bg-opacity-50 z-40 hidden transition-opacity duration-300 md:hidden"></div>
+
     <div class="flex h-screen overflow-hidden">
         
-        <aside class="w-64 bg-white border-r border-gray-200 flex flex-col hidden md:flex">
-            <div class="h-16 flex items-center justify-center border-b border-gray-100">
+        <aside id="sidebar" class="fixed inset-y-0 left-0 z-50 w-64 bg-white border-r border-gray-200 flex flex-col transition-transform duration-300 transform -translate-x-full md:translate-x-0 md:static md:flex">
+            <div class="h-16 flex items-center justify-center border-b border-gray-100 relative">
                 <h1 class="text-2xl font-bold text-emerald-600">Dash<span class="text-amber-500">Gold</span></h1>
+                <button onclick="toggleSidebar()" class="absolute right-4 top-5 text-gray-500 md:hidden">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+                </button>
             </div>
             <nav class="flex-1 px-4 py-6 space-y-2">
                 <a href="dashboard.html" class="flex items-center px-4 py-3 bg-emerald-50 text-emerald-700 rounded-lg font-semibold">
@@ -35,88 +40,88 @@
             </div>
         </aside>
 
-        <main class="flex-1 overflow-y-auto p-8">
-            <header class="flex justify-between items-center mb-12">
-                <div>
-                    <h2 class="text-2xl font-bold text-gray-900">Overview Performa</h2>
-                    <p class="text-sm text-gray-500 mt-1">Ringkasan profit dan stok emas terkini.</p>
+        <main class="flex-1 overflow-y-auto p-4 md:p-8"> <header class="flex justify-between items-center mb-12">
+                <div class="flex items-center gap-3">
+                    <button onclick="toggleSidebar()" class="p-2 -ml-2 text-gray-600 rounded-md hover:bg-gray-200 focus:outline-none md:hidden">
+                        <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                        </svg>
+                    </button>
+
+                    <div>
+                        <h2 class="text-xl md:text-2xl font-bold text-gray-900">Overview Performa</h2>
+                        <p class="text-xs md:text-sm text-gray-500 mt-1 hidden md:block">Ringkasan profit dan stok emas terkini.</p>
+                    </div>
                 </div>
-                <div class="bg-white border border-gray-200 px-4 py-2 rounded-lg text-sm font-medium text-gray-600 shadow-sm flex items-center gap-2">
-                    <span class="relative flex h-3 w-3">
+
+                <div class="bg-white border border-gray-200 px-3 py-2 rounded-lg text-xs md:text-sm font-medium text-gray-600 shadow-sm flex items-center gap-2">
+                    <span class="relative flex h-2 w-2 md:h-3 md:w-3">
                       <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
-                      <span class="relative inline-flex rounded-full h-3 w-3 bg-emerald-500"></span>
+                      <span class="relative inline-flex rounded-full h-2 w-2 md:h-3 md:w-3 bg-emerald-500"></span>
                     </span>
-                    Sabtu, 03 Jan 2026
+                    <span class="hidden md:inline">03 Jan 2026
                 </div>
             </header>
 
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6 mb-12">
                 
-                <div class="bg-white p-6 rounded-xl shadow-sm border-t-4 border-emerald-500 flex flex-col relative overflow-hidden">
+                <div class="bg-white p-6 rounded-xl shadow-sm border-t-4 border-teal-600 flex flex-col relative overflow-hidden">
                     <div class="flex justify-between items-start">
                         <div>
                             <p class="text-sm text-gray-500 font-semibold uppercase tracking-wider">Profit Hari Ini</p>
                             <h3 class="text-2xl font-bold text-gray-800 mt-1">Rp 1.500.000</h3>
                         </div>
-                        <div class="p-3 rounded-lg bg-gradient-to-br from-emerald-400 to-green-600 text-white shadow-md shadow-emerald-200">
+                        <div class="p-3 rounded-lg bg-gradient-to-br from-teal-500 to-emerald-700 text-white shadow-md shadow-teal-200/50">
                             <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"></path></svg>
                         </div>
                     </div>
-                    <div class="mt-4 flex items-center text-xs font-medium text-emerald-600">
-                        <span class="bg-emerald-50 px-2 py-1 rounded-full">
-                            ↗ +5% dari kemarin
-                        </span>
+                    <div class="mt-4 flex items-center text-xs font-medium text-teal-700">
+                        <span class="bg-teal-50 px-2 py-1 rounded-full">↗ +5% dari kemarin</span>
                     </div>
                 </div>
 
-                <div class="bg-white p-6 rounded-xl shadow-sm border-t-4 border-blue-500 flex flex-col relative overflow-hidden">
+                <div class="bg-white p-6 rounded-xl shadow-sm border-t-4 border-sky-500 flex flex-col relative overflow-hidden">
                     <div class="flex justify-between items-start">
                         <div>
                             <p class="text-sm text-gray-500 font-semibold uppercase tracking-wider">Minggu Ini</p>
                             <h3 class="text-2xl font-bold text-gray-800 mt-1">Rp 8.450.000</h3>
                         </div>
-                        <div class="p-3 rounded-lg bg-gradient-to-br from-blue-400 to-blue-600 text-white shadow-md shadow-blue-200">
+                        <div class="p-3 rounded-lg bg-gradient-to-br from-sky-400 to-blue-600 text-white shadow-md shadow-sky-200/50">
                             <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path></svg>
                         </div>
                     </div>
-                    <div class="mt-4 flex items-center text-xs font-medium text-blue-600">
-                        <span class="bg-blue-50 px-2 py-1 rounded-full">
-                            Senin - Minggu
-                        </span>
+                    <div class="mt-4 flex items-center text-xs font-medium text-sky-700">
+                        <span class="bg-sky-50 px-2 py-1 rounded-full">Senin - Minggu</span>
                     </div>
                 </div>
 
-                <div class="bg-white p-6 rounded-xl shadow-sm border-t-4 border-teal-500 flex flex-col relative overflow-hidden">
+                <div class="bg-white p-6 rounded-xl shadow-sm border-t-4 border-blue-700 flex flex-col relative overflow-hidden">
                     <div class="flex justify-between items-start">
                         <div>
                             <p class="text-sm text-gray-500 font-semibold uppercase tracking-wider">Bulan Ini</p>
                             <h3 class="text-2xl font-bold text-gray-800 mt-1">Rp 35.200.000</h3>
                         </div>
-                        <div class="p-3 rounded-lg bg-gradient-to-br from-teal-400 to-teal-600 text-white shadow-md shadow-teal-200">
+                        <div class="p-3 rounded-lg bg-gradient-to-br from-blue-600 to-blue-800 text-white shadow-md shadow-blue-200/50">
                             <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
                         </div>
                     </div>
-                    <div class="mt-4 flex items-center text-xs font-medium text-teal-600">
-                        <span class="bg-teal-50 px-2 py-1 rounded-full">
-                            Januari 2026
-                        </span>
+                    <div class="mt-4 flex items-center text-xs font-medium text-blue-800">
+                        <span class="bg-blue-50 px-2 py-1 rounded-full">Jan 2026</span>
                     </div>
                 </div>
 
-                <div class="bg-white p-6 rounded-xl shadow-sm border-t-4 border-amber-500 flex flex-col relative overflow-hidden">
+                <div class="bg-white p-6 rounded-xl shadow-sm border-t-4 border-orange-500 flex flex-col relative overflow-hidden">
                     <div class="flex justify-between items-start">
                         <div>
                             <p class="text-sm text-gray-500 font-semibold uppercase tracking-wider">Stok Gudang</p>
-                            <h3 class="text-2xl font-bold text-gray-800 mt-1">145 <span class="text-lg font-normal  ">gr</span></h3>
+                            <h3 class="text-2xl font-bold text-gray-800 mt-1">145 <span class="text-lg font-normal text-gray-400">Gr</span></h3>
                         </div>
-                        <div class="p-3 rounded-lg bg-gradient-to-br from-amber-400 to-orange-500 text-white shadow-md shadow-amber-200">
+                        <div class="p-3 rounded-lg bg-gradient-to-br from-orange-400 to-amber-600 text-white shadow-md shadow-orange-200/50">
                             <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"></path></svg>
                         </div>
                     </div>
-                    <div class="mt-4 flex items-center text-xs font-medium text-amber-600">
-                        <span class="bg-amber-50 px-2 py-1 rounded-full">
-                            Siap Jual
-                        </span>
+                    <div class="mt-4 flex items-center text-xs font-medium text-orange-700">
+                        <span class="bg-orange-50 px-2 py-1 rounded-full">Siap Jual</span>
                     </div>
                 </div>
             </div>
@@ -137,9 +142,8 @@
                                 <th class="px-6 py-3 font-semibold bg-gray-50/50">Supplier</th>
                                 <th class="px-6 py-3 font-semibold bg-gray-50/50">Pembeli</th>
                                 <th class="px-6 py-3 font-semibold bg-gray-50/50 text-center">Jml (Gr)</th>
-                                <th class="px-6 py-3 font-semibold bg-gray-50/50 text-right">Harga Beli</th>
-                                <th class="px-6 py-3 font-semibold bg-gray-50/50 text-right">Harga Jual</th>
-                                <th class="px-6 py-3 font-semibold bg-gray-50/50">Tgl Beli</th>
+                                <th class="px-6 py-3 font-semibold bg-gray-50/50 text-right">Harga Jual (Gr)</th>
+                                <th class="px-6 py-3 font-semibold bg-gray-50/50 text-right">Total Jual</th>
                                 <th class="px-6 py-3 font-bold bg-emerald-50 text-emerald-700 text-right">Profit</th>
                             </tr>
                         </thead>
@@ -152,9 +156,8 @@
                                 <td class="px-6 py-4 text-gray-600">PT Antam</td>
                                 <td class="px-6 py-4 text-gray-600">Budi Santoso</td>
                                 <td class="px-6 py-4 text-center font-medium">10</td>
-                                <td class="px-6 py-4 text-right text-gray-500">9.000.000</td>
+                                <td class="px-6 py-4 text-right text-gray-500">1.050.000</td>
                                 <td class="px-6 py-4 text-right font-medium text-gray-900">10.500.000</td>
-                                <td class="px-6 py-4 text-xs text-gray-400">01 Jan 2026</td>
                                 <td class="px-6 py-4 text-right text-emerald-600 font-bold bg-emerald-50/50">+ 1.500.000</td>
                             </tr>
 
@@ -165,9 +168,8 @@
                                 <td class="px-6 py-4 text-gray-600">UBS Gold</td>
                                 <td class="px-6 py-4 text-gray-600">Siti Aminah</td>
                                 <td class="px-6 py-4 text-center font-medium">5</td>
-                                <td class="px-6 py-4 text-right text-gray-500">4.500.000</td>
+                                <td class="px-6 py-4 text-right text-gray-500">1.040.000</td>
                                 <td class="px-6 py-4 text-right font-medium text-gray-900">5.200.000</td>
-                                <td class="px-6 py-4 text-xs text-gray-400">20 Des 2025</td>
                                 <td class="px-6 py-4 text-right text-emerald-600 font-bold bg-emerald-50/50">+ 700.000</td>
                             </tr>
 
@@ -182,5 +184,21 @@
         </main>
     </div>
 
+    <script>
+        function toggleSidebar() {
+            const sidebar = document.getElementById('sidebar');
+            const overlay = document.getElementById('overlay');
+            
+            if (sidebar.classList.contains('-translate-x-full')) {
+                // Buka Sidebar
+                sidebar.classList.remove('-translate-x-full');
+                overlay.classList.remove('hidden');
+            } else {
+                // Tutup Sidebar
+                sidebar.classList.add('-translate-x-full');
+                overlay.classList.add('hidden');
+            }
+        }
+    </script>
 </body>
 </html>
