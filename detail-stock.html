@@ -35,6 +35,13 @@
         <main class="flex-1 overflow-y-auto p-4 md:p-8">
             <div class="max-w-[1000px] mx-auto">
                 
+                <div class="mb-6">
+                    <a href="stok.html" class="inline-flex items-center gap-2 text-gray-500 hover:text-emerald-600 transition font-medium group">
+                        <svg class="w-5 h-5 transition-transform group-hover:-translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path></svg>
+                        Kembali ke Stok
+                    </a>
+                </div>
+
                 <div class="bg-white rounded-3xl p-6 md:p-8 shadow-sm border border-gray-100 mb-8 flex flex-col md:flex-row justify-between items-start gap-6">
                     <div class="flex gap-5">
                         <div class="w-16 h-16 bg-amber-100 rounded-2xl flex items-center justify-center text-amber-600 shadow-sm border border-amber-50">
@@ -43,7 +50,7 @@
                         <div>
                             <div class="flex items-center gap-3 mb-1">
                                 <h2 class="text-2xl font-extrabold text-gray-900 tracking-tight">Emas Antam 10g</h2>
-                                <span class="px-3 py-1 bg-emerald-100 text-emerald-700 text-[10px] font-bold uppercase rounded-full border border-emerald-200">Tersedia</span>
+                                <span class="px-3 py-1 bg-red-100 text-red-700 text-[10px] font-bold uppercase rounded-full border border-red-200">Terjual</span>
                             </div>
                             <p class="text-gray-500 text-sm font-medium">SKU: DG-ANTAM-10G-001</p>
                         </div>
@@ -52,41 +59,67 @@
 
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
                     
-                    <div class="bg-white rounded-3xl p-8 shadow-sm border border-gray-100">
-                        <h3 class="text-lg font-bold text-gray-900 mb-6 border-b pb-4">Informasi Barang</h3>
-                        <div class="space-y-5">
-                            <div class="flex justify-between">
-                                <span class="text-gray-400 font-medium">Supplier</span>
-                                <span class="text-gray-900 font-bold">PT Antam Tbk</span>
-                            </div>
-                            <div class="flex justify-between">
-                                <span class="text-gray-400 font-medium">Berat Barang</span>
-                                <span class="text-gray-900 font-bold">10 Gram</span>
-                            </div>
-                            <div class="flex justify-between">
-                                <span class="text-gray-400 font-medium">Tanggal Pembelian</span>
-                                <span class="text-gray-900 font-bold">01 Jan 2026</span>
-                            </div>
-                            <div class="flex justify-between items-center pt-4 border-t border-dashed">
-                                <span class="text-gray-400 font-medium">Harga Modal (Total)</span>
-                                <span class="text-xl font-black text-emerald-600">Rp 9.000.000</span>
-                            </div>
-                            <div class="flex justify-between items-center">
-                                <span class="text-gray-400 font-medium">Harga Per Gram</span>
-                                <span class="text-sm font-bold text-gray-500">Rp 900.000 / gr</span>
+                    <div class="space-y-8">
+                        
+                        <div class="bg-white rounded-3xl p-8 shadow-sm border border-gray-100">
+                            <h3 class="text-lg font-bold text-gray-900 mb-6 border-b pb-4">Informasi Barang</h3>
+                            <div class="space-y-5">
+                                <div class="flex justify-between">
+                                    <span class="text-gray-400 font-medium">Supplier</span>
+                                    <span class="text-gray-900 font-bold">PT Antam Tbk</span>
+                                </div>
+                                <div class="flex justify-between">
+                                    <span class="text-gray-400 font-medium">Berat Barang</span>
+                                    <span class="text-gray-900 font-bold">10 Gram</span>
+                                </div>
+                                <div class="flex justify-between">
+                                    <span class="text-gray-400 font-medium">Tanggal Pembelian</span>
+                                    <span class="text-gray-900 font-bold">01 Jan 2026</span>
+                                </div>
+                                <div class="flex justify-between items-center pt-4 border-t border-dashed">
+                                    <span class="text-gray-400 font-medium">Harga Modal (Total)</span>
+                                    <span class="text-xl font-black text-emerald-600">Rp 9.000.000</span>
+                                </div>
                             </div>
                         </div>
+
+                        <div class="bg-white rounded-3xl p-8 shadow-sm border border-gray-100 relative overflow-hidden">
+                            <div class="absolute top-0 left-0 w-1.5 h-full bg-emerald-500"></div>
+                            <h3 class="text-lg font-bold text-gray-900 mb-6 border-b pb-4 flex items-center gap-2">
+                                <svg class="w-5 h-5 text-emerald-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 9V7a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2m2 4h10a2 2 0 002-2v-6a2 2 0 00-2-2H9a2 2 0 00-2 2v6a2 2 0 002 2zm7-5a2 2 0 11-4 0 2 2 0 014 0z"></path></svg>
+                                Informasi Penjualan
+                            </h3>
+                            <div class="space-y-5">
+                                <div class="flex justify-between">
+                                    <span class="text-gray-400 font-medium">Nama Pembeli</span>
+                                    <span class="text-gray-900 font-bold">Budi Santoso</span>
+                                </div>
+                                <div class="flex justify-between">
+                                    <span class="text-gray-400 font-medium">Tanggal Jual</span>
+                                    <span class="text-gray-900 font-bold">03 Jan 2026</span>
+                                </div>
+                                <div class="flex justify-between items-center pt-4 border-t border-dashed">
+                                    <span class="text-gray-400 font-medium">Harga Jual</span>
+                                    <span class="text-xl font-black text-gray-800">Rp 10.500.000</span>
+                                </div>
+                                <div class="flex justify-between items-center bg-emerald-50 p-3 rounded-xl">
+                                    <span class="text-emerald-700 font-bold">Profit</span>
+                                    <span class="text-emerald-700 font-black">+ Rp 1.500.000</span>
+                                </div>
+                            </div>
+                        </div>
+
                     </div>
 
-                    <div class="bg-white rounded-3xl p-8 shadow-sm border border-gray-100">
+                    <div class="bg-white rounded-3xl p-8 shadow-sm border border-gray-100 h-fit">
                         <h3 class="text-lg font-bold text-gray-900 mb-6 border-b pb-4">Aktivitas Stok</h3>
-                        <div class="relative space-y-6">
+                        <div class="relative space-y-8">
                             <div class="absolute left-[11px] top-2 bottom-2 w-0.5 bg-gray-100"></div>
                             
                             <div class="relative flex gap-4 pl-8">
                                 <div class="absolute left-0 top-1 w-6 h-6 rounded-full bg-emerald-500 border-4 border-white shadow-sm flex items-center justify-center"></div>
                                 <div>
-                                    <p class="text-sm font-bold text-gray-900">Barang Masuk ke Gudang</p>
+                                    <p class="text-sm font-bold text-gray-900">Barang Masuk</p>
                                     <p class="text-xs text-gray-400">01 Jan 2026 • 10:00 WIB</p>
                                     <p class="text-xs text-gray-500 mt-2 bg-gray-50 p-2 rounded-lg italic">"Input stok awal oleh Admin BSI"</p>
                                 </div>
@@ -100,6 +133,18 @@
                                     <p class="text-xs text-gray-500 mt-2 italic">Menyesuaikan faktur terbaru supplier.</p>
                                 </div>
                             </div>
+
+                            <div class="relative flex gap-4 pl-8">
+                                <div class="absolute left-0 top-1 w-6 h-6 rounded-full bg-red-500 border-4 border-white shadow-sm flex items-center justify-center">
+                                    <svg class="w-3 h-3 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"></path></svg>
+                                </div>
+                                <div>
+                                    <p class="text-sm font-bold text-gray-900">Barang Terjual</p>
+                                    <p class="text-xs text-gray-400">03 Jan 2026 • 14:30 WIB</p>
+                                    <p class="text-xs text-gray-500 mt-2 italic">Dibeli oleh <span class="font-bold text-gray-700">Budi Santoso</span></p>
+                                </div>
+                            </div>
+
                         </div>
                     </div>
 
