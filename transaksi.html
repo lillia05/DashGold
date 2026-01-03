@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Transaksi - DashGold BSI</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>body { font-family: 'Inter', sans-serif; }</style>
+</head>
+<body class="bg-gray-50 text-gray-800">
+
+    <div class="flex h-screen overflow-hidden">
+        
+        <aside class="w-64 bg-white border-r border-gray-200 flex flex-col">
+            <div class="h-16 flex items-center justify-center border-b border-gray-100">
+                <h1 class="text-2xl font-bold text-emerald-600">Dash<span class="text-amber-500">Gold</span></h1>
+            </div>
+            <nav class="flex-1 px-4 py-6 space-y-2">
+                <a href="index.html" class="flex items-center px-4 py-3 text-gray-600 hover:bg-gray-50 rounded-lg transition">
+                    Dashboard
+                </a>
+                <a href="transaksi.html" class="flex items-center px-4 py-3 bg-emerald-50 text-emerald-700 rounded-lg font-semibold">
+                    Riwayat Penjualan
+                </a>
+                <a href="stok.html" class="flex items-center px-4 py-3 text-gray-600 hover:bg-gray-50 rounded-lg transition">
+                    Stok & Input
+                </a>
+            </nav>
+        </aside>
+
+        <main class="flex-1 overflow-y-auto p-8">
+            <h2 class="text-2xl font-bold text-gray-800 mb-6">Laporan Penjualan Emas</h2>
+
+            <div class="bg-white rounded-xl shadow-sm overflow-hidden border border-gray-100">
+                <div class="p-4 border-b flex gap-4 bg-gray-50">
+                    <input type="date" class="border rounded px-3 py-1 text-sm">
+                    <span class="text-gray-500 self-center">s/d</span>
+                    <input type="date" class="border rounded px-3 py-1 text-sm">
+                    <button class="bg-emerald-600 text-white px-4 py-1 rounded text-sm">Filter</button>
+                </div>
+
+                <table class="w-full text-left">
+                    <thead class="bg-white text-gray-600 uppercase text-xs border-b">
+                        <tr>
+                            <th class="px-6 py-3">Tanggal</th>
+                            <th class="px-6 py-3">Barang</th>
+                            <th class="px-6 py-3">Pembeli</th>
+                            <th class="px-6 py-3">Harga Jual</th>
+                            <th class="px-6 py-3 text-emerald-600 text-right">Keuntungan</th>
+                        </tr>
+                    </thead>
+                    <tbody class="text-sm divide-y divide-gray-100">
+                        <tr class="hover:bg-gray-50">
+                            <td class="px-6 py-4 text-gray-500">03 Jan 2026</td>
+                            <td class="px-6 py-4 font-medium">Emas Antam 10g</td>
+                            <td class="px-6 py-4">Budi Santoso</td>
+                            <td class="px-6 py-4">Rp 10.500.000</td>
+                            <td class="px-6 py-4 text-emerald-600 font-bold text-right">+ Rp 1.500.000</td>
+                        </tr>
+                        <tr class="hover:bg-gray-50">
+                            <td class="px-6 py-4 text-gray-500">02 Jan 2026</td>
+                            <td class="px-6 py-4 font-medium">Emas UBS 5g</td>
+                            <td class="px-6 py-4">Siti Aminah</td>
+                            <td class="px-6 py-4">Rp 5.200.000</td>
+                            <td class="px-6 py-4 text-emerald-600 font-bold text-right">+ Rp 700.000</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </main>
+    </div>
+</body>
+</html>

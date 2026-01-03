@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - DashGold BSI</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Inter', sans-serif; }
+        .scrollbar-hide::-webkit-scrollbar { display: none; }
+    </style>
+</head>
+<body class="bg-gray-100 text-gray-800">
+
+    <div class="flex h-screen overflow-hidden">
+        
+        <aside class="w-64 bg-white border-r border-gray-200 flex flex-col hidden md:flex">
+            <div class="h-16 flex items-center justify-center border-b border-gray-100">
+                <h1 class="text-2xl font-bold text-emerald-600">Dash<span class="text-amber-500">Gold</span></h1>
+            </div>
+            <nav class="flex-1 px-4 py-6 space-y-2">
+                <a href="dashboard.html" class="flex items-center px-4 py-3 bg-emerald-50 text-emerald-700 rounded-lg font-semibold">
+                    Dashboard
+                </a>
+                <a href="transaksi.html" class="flex items-center px-4 py-3 text-gray-600 hover:bg-gray-50 rounded-lg transition">
+                    Riwayat Penjualan
+                </a>
+                <a href="stok.html" class="flex items-center px-4 py-3 text-gray-600 hover:bg-gray-50 rounded-lg transition">
+                    Stok & Input
+                </a>
+            </nav>
+            <div class="p-4 border-t text-xs text-gray-400 text-center">
+                Project KP BSI &copy; 2026
+            </div>
+        </aside>
+
+        <main class="flex-1 overflow-y-auto p-8">
+            <header class="flex justify-between items-center mb-12">
+                <div>
+                    <h2 class="text-2xl font-bold text-gray-900">Overview Performa</h2>
+                    <p class="text-sm text-gray-500 mt-1">Ringkasan profit dan stok emas terkini.</p>
+                </div>
+                <div class="bg-white border border-gray-200 px-4 py-2 rounded-lg text-sm font-medium text-gray-600 shadow-sm flex items-center gap-2">
+                    <span class="relative flex h-3 w-3">
+                      <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+                      <span class="relative inline-flex rounded-full h-3 w-3 bg-emerald-500"></span>
+                    </span>
+                    Sabtu, 03 Jan 2026
+                </div>
+            </header>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
+                
+                <div class="bg-white p-6 rounded-xl shadow-sm border-t-4 border-emerald-500 flex flex-col relative overflow-hidden">
+                    <div class="flex justify-between items-start">
+                        <div>
+                            <p class="text-sm text-gray-500 font-semibold uppercase tracking-wider">Profit Hari Ini</p>
+                            <h3 class="text-2xl font-bold text-gray-800 mt-1">Rp 1.500.000</h3>
+                        </div>
+                        <div class="p-3 rounded-lg bg-gradient-to-br from-emerald-400 to-green-600 text-white shadow-md shadow-emerald-200">
+                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"></path></svg>
+                        </div>
+                    </div>
+                    <div class="mt-4 flex items-center text-xs font-medium text-emerald-600">
+                        <span class="bg-emerald-50 px-2 py-1 rounded-full">
+                            ↗ +5% dari kemarin
+                        </span>
+                    </div>
+                </div>
+
+                <div class="bg-white p-6 rounded-xl shadow-sm border-t-4 border-blue-500 flex flex-col relative overflow-hidden">
+                    <div class="flex justify-between items-start">
+                        <div>
+                            <p class="text-sm text-gray-500 font-semibold uppercase tracking-wider">Minggu Ini</p>
+                            <h3 class="text-2xl font-bold text-gray-800 mt-1">Rp 8.450.000</h3>
+                        </div>
+                        <div class="p-3 rounded-lg bg-gradient-to-br from-blue-400 to-blue-600 text-white shadow-md shadow-blue-200">
+                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path></svg>
+                        </div>
+                    </div>
+                    <div class="mt-4 flex items-center text-xs font-medium text-blue-600">
+                        <span class="bg-blue-50 px-2 py-1 rounded-full">
+                            Senin - Minggu
+                        </span>
+                    </div>
+                </div>
+
+                <div class="bg-white p-6 rounded-xl shadow-sm border-t-4 border-teal-500 flex flex-col relative overflow-hidden">
+                    <div class="flex justify-between items-start">
+                        <div>
+                            <p class="text-sm text-gray-500 font-semibold uppercase tracking-wider">Bulan Ini</p>
+                            <h3 class="text-2xl font-bold text-gray-800 mt-1">Rp 35.200.000</h3>
+                        </div>
+                        <div class="p-3 rounded-lg bg-gradient-to-br from-teal-400 to-teal-600 text-white shadow-md shadow-teal-200">
+                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
+                        </div>
+                    </div>
+                    <div class="mt-4 flex items-center text-xs font-medium text-teal-600">
+                        <span class="bg-teal-50 px-2 py-1 rounded-full">
+                            Januari 2026
+                        </span>
+                    </div>
+                </div>
+
+                <div class="bg-white p-6 rounded-xl shadow-sm border-t-4 border-amber-500 flex flex-col relative overflow-hidden">
+                    <div class="flex justify-between items-start">
+                        <div>
+                            <p class="text-sm text-gray-500 font-semibold uppercase tracking-wider">Stok Gudang</p>
+                            <h3 class="text-2xl font-bold text-gray-800 mt-1">145 <span class="text-lg font-normal  ">gr</span></h3>
+                        </div>
+                        <div class="p-3 rounded-lg bg-gradient-to-br from-amber-400 to-orange-500 text-white shadow-md shadow-amber-200">
+                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"></path></svg>
+                        </div>
+                    </div>
+                    <div class="mt-4 flex items-center text-xs font-medium text-amber-600">
+                        <span class="bg-amber-50 px-2 py-1 rounded-full">
+                            Siap Jual
+                        </span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden">
+                <div class="px-6 py-4 border-b border-gray-100 flex justify-between items-center bg-gray-50">
+                    <h3 class="font-bold text-gray-900">Transaksi Terbaru</h3>
+                    <a href="transaksi.html" class="text-sm text-emerald-600 hover:text-emerald-700 font-medium">Lihat Semua ></a>
+                </div>
+                
+                <div class="overflow-x-auto">
+                    <table class="w-full text-left whitespace-nowrap">
+                        <thead class="bg-white text-gray-500 uppercase text-xs border-b border-gray-100">
+                            <tr>
+                                <th class="px-6 py-3 font-semibold bg-gray-50/50">No</th>
+                                <th class="px-6 py-3 font-semibold bg-gray-50/50">Tgl Jual</th> 
+                                <th class="px-6 py-3 font-semibold bg-gray-50/50">Nama Barang</th>
+                                <th class="px-6 py-3 font-semibold bg-gray-50/50">Supplier</th>
+                                <th class="px-6 py-3 font-semibold bg-gray-50/50">Pembeli</th>
+                                <th class="px-6 py-3 font-semibold bg-gray-50/50 text-center">Jml (Gr)</th>
+                                <th class="px-6 py-3 font-semibold bg-gray-50/50 text-right">Harga Beli</th>
+                                <th class="px-6 py-3 font-semibold bg-gray-50/50 text-right">Harga Jual</th>
+                                <th class="px-6 py-3 font-semibold bg-gray-50/50">Tgl Beli</th>
+                                <th class="px-6 py-3 font-bold bg-emerald-50 text-emerald-700 text-right">Profit</th>
+                            </tr>
+                        </thead>
+                        <tbody class="text-sm divide-y divide-gray-100">
+                            
+                            <tr class="hover:bg-gray-50/80 transition-colors">
+                                <td class="px-6 py-4 text-gray-500">1</td>
+                                <td class="px-6 py-4 text-gray-900 font-medium">03 Jan 2026</td>
+                                <td class="px-6 py-4 font-bold text-gray-900">Emas Antam 10g</td>
+                                <td class="px-6 py-4 text-gray-600">PT Antam</td>
+                                <td class="px-6 py-4 text-gray-600">Budi Santoso</td>
+                                <td class="px-6 py-4 text-center font-medium">10</td>
+                                <td class="px-6 py-4 text-right text-gray-500">9.000.000</td>
+                                <td class="px-6 py-4 text-right font-medium text-gray-900">10.500.000</td>
+                                <td class="px-6 py-4 text-xs text-gray-400">01 Jan 2026</td>
+                                <td class="px-6 py-4 text-right text-emerald-600 font-bold bg-emerald-50/50">+ 1.500.000</td>
+                            </tr>
+
+                            <tr class="hover:bg-gray-50/80 transition-colors">
+                                <td class="px-6 py-4 text-gray-500">2</td>
+                                <td class="px-6 py-4 text-gray-900 font-medium">02 Jan 2026</td>
+                                <td class="px-6 py-4 font-bold text-gray-900">Emas UBS 5g</td>
+                                <td class="px-6 py-4 text-gray-600">UBS Gold</td>
+                                <td class="px-6 py-4 text-gray-600">Siti Aminah</td>
+                                <td class="px-6 py-4 text-center font-medium">5</td>
+                                <td class="px-6 py-4 text-right text-gray-500">4.500.000</td>
+                                <td class="px-6 py-4 text-right font-medium text-gray-900">5.200.000</td>
+                                <td class="px-6 py-4 text-xs text-gray-400">20 Des 2025</td>
+                                <td class="px-6 py-4 text-right text-emerald-600 font-bold bg-emerald-50/50">+ 700.000</td>
+                            </tr>
+
+                        </tbody>
+                    </table>
+                </div>
+                <div class="p-3 bg-gray-50 border-t border-gray-100 text-center">
+                    <span class="text-xs text-gray-500 font-medium">Menampilkan 5 transaksi terbaru</span>
+                </div>
+            </div>
+
+        </main>
+    </div>
+
+</body>
+</html>

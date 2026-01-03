@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stok - DashGold BSI</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>body { font-family: 'Inter', sans-serif; }</style>
+</head>
+<body class="bg-gray-50 text-gray-800">
+
+    <div class="flex h-screen overflow-hidden">
+        
+        <aside class="w-64 bg-white border-r border-gray-200 flex flex-col">
+            <div class="h-16 flex items-center justify-center border-b border-gray-100">
+                <h1 class="text-2xl font-bold text-emerald-600">Dash<span class="text-amber-500">Gold</span></h1>
+            </div>
+            <nav class="flex-1 px-4 py-6 space-y-2">
+                <a href="index.html" class="flex items-center px-4 py-3 text-gray-600 hover:bg-gray-50 rounded-lg transition">
+                    Dashboard
+                </a>
+                <a href="transaksi.html" class="flex items-center px-4 py-3 text-gray-600 hover:bg-gray-50 rounded-lg transition">
+                    Riwayat Penjualan
+                </a>
+                <a href="stok.html" class="flex items-center px-4 py-3 bg-emerald-50 text-emerald-700 rounded-lg font-semibold">
+                    Stok & Input
+                </a>
+            </nav>
+        </aside>
+
+        <main class="flex-1 overflow-y-auto p-8 relative">
+            <h2 class="text-2xl font-bold text-gray-800 mb-6">Manajemen Stok Emas</h2>
+
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                
+                <div class="lg:col-span-1">
+                    <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-200 sticky top-4">
+                        <h3 class="font-bold text-lg mb-4 text-emerald-700 border-b pb-2">Input Stok Baru</h3>
+                        <form>
+                            <div class="mb-3">
+                                <label class="block text-xs font-bold text-gray-500 mb-1 uppercase">Nama Barang</label>
+                                <input type="text" class="w-full border border-gray-300 rounded p-2 text-sm focus:ring-2 focus:ring-emerald-500 outline-none" placeholder="Contoh: Emas Antam 5g">
+                            </div>
+                            <div class="mb-3">
+                                <label class="block text-xs font-bold text-gray-500 mb-1 uppercase">Supplier</label>
+                                <input type="text" class="w-full border border-gray-300 rounded p-2 text-sm" placeholder="Nama Supplier">
+                            </div>
+                            <div class="flex gap-2 mb-3">
+                                <div class="w-1/2">
+                                    <label class="block text-xs font-bold text-gray-500 mb-1 uppercase">Tahun</label>
+                                    <input type="number" class="w-full border border-gray-300 rounded p-2 text-sm" value="2025">
+                                </div>
+                                <div class="w-1/2">
+                                    <label class="block text-xs font-bold text-gray-500 mb-1 uppercase">Stok (Gr)</label>
+                                    <input type="number" class="w-full border border-gray-300 rounded p-2 text-sm" placeholder="0">
+                                </div>
+                            </div>
+                            <div class="mb-4">
+                                <label class="block text-xs font-bold text-gray-500 mb-1 uppercase">Harga Beli Total (Rp)</label>
+                                <input type="number" class="w-full border border-gray-300 rounded p-2 text-sm bg-gray-50" placeholder="Modal Beli">
+                            </div>
+                            <button type="button" class="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-2 rounded transition shadow-lg shadow-emerald-200">
+                                + Simpan ke Gudang
+                            </button>
+                        </form>
+                    </div>
+                </div>
+
+                <div class="lg:col-span-2">
+                    <div class="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden">
+                        <div class="px-6 py-4 border-b bg-gray-50 flex justify-between items-center">
+                            <h3 class="font-bold text-gray-700">Stok Tersedia (Siap Jual)</h3>
+                            <span class="text-xs text-gray-500">Total: 2 Item</span>
+                        </div>
+                        <table class="w-full text-left">
+                            <thead class="text-xs text-gray-500 uppercase bg-white border-b">
+                                <tr>
+                                    <th class="px-6 py-3">Barang</th>
+                                    <th class="px-6 py-3">Stok</th>
+                                    <th class="px-6 py-3">Harga Beli</th>
+                                    <th class="px-6 py-3 text-right">Aksi</th>
+                                </tr>
+                            </thead>
+                            <tbody class="text-sm divide-y divide-gray-100">
+                                <tr class="hover:bg-gray-50">
+                                    <td class="px-6 py-4">
+                                        <div class="font-bold text-gray-800">Emas Antam 10g</div>
+                                        <div class="text-xs text-gray-500">PT Antam Tbk</div>
+                                    </td>
+                                    <td class="px-6 py-4">
+                                        <span class="bg-amber-100 text-amber-800 px-2 py-1 rounded text-xs font-bold">10 gr</span>
+                                    </td>
+                                    <td class="px-6 py-4">Rp 9.000.000</td>
+                                    <td class="px-6 py-4 text-right">
+                                        <button onclick="bukaModal()" class="bg-blue-600 hover:bg-blue-700 text-white text-xs px-3 py-1.5 rounded shadow transition">
+                                            Jual / Edit
+                                        </button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <div id="modalJual" class="fixed inset-0 bg-gray-900 bg-opacity-50 hidden flex items-center justify-center z-50 backdrop-blur-sm">
+                <div class="bg-white rounded-xl w-full max-w-md p-6 shadow-2xl transform transition-all scale-100">
+                    <div class="flex justify-between items-center mb-4">
+                        <h2 class="text-xl font-bold text-gray-800">Proses Penjualan</h2>
+                        <button onclick="tutupModal()" class="text-gray-400 hover:text-red-500 text-xl">&times;</button>
+                    </div>
+                    
+                    <form>
+                        <div class="mb-4 bg-blue-50 p-3 rounded border border-blue-100">
+                            <label class="block text-xs font-bold text-blue-600 uppercase">Barang</label>
+                            <input type="text" value="Emas Antam 10g" class="w-full bg-transparent font-bold text-gray-800 outline-none" readonly>
+                        </div>
+
+                        <div class="flex gap-4 mb-4">
+                            <div class="w-1/2">
+                                <label class="block text-sm text-gray-500">Stok Asli</label>
+                                <input type="text" value="10" class="w-full bg-gray-100 border border-gray-300 rounded p-2 text-center font-bold" readonly>
+                            </div>
+                            <div class="w-1/2">
+                                <label class="block text-sm font-bold text-blue-600">Jual Berapa?</label>
+                                <input type="number" class="w-full border-2 border-blue-500 rounded p-2 text-center font-bold focus:ring-2 focus:ring-blue-300 outline-none" value="10">
+                            </div>
+                        </div>
+
+                        <div class="mb-4">
+                            <label class="block text-sm font-medium text-gray-700 mb-1">Nama Pembeli</label>
+                            <input type="text" class="w-full border border-gray-300 rounded p-2" placeholder="Nama Nasabah">
+                        </div>
+
+                        <div class="mb-6">
+                            <label class="block text-sm font-medium text-gray-700 mb-1">Harga Jual (Rp)</label>
+                            <input type="number" class="w-full border border-gray-300 rounded p-2" placeholder="Total Rupiah">
+                        </div>
+
+                        <div class="flex justify-end gap-2">
+                            <button type="button" onclick="tutupModal()" class="px-4 py-2 text-gray-600 hover:bg-gray-100 rounded">Batal</button>
+                            <button type="button" onclick="alert('Data Tersimpan! (Simulasi)')" class="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 font-medium">Simpan Transaksi</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+        </main>
+    </div>
+
+    <script>
+        function bukaModal() {
+            document.getElementById('modalJual').classList.remove('hidden');
+        }
+        function tutupModal() {
+            document.getElementById('modalJual').classList.add('hidden');
+        }
+    </script>
+</body>
+</html>
