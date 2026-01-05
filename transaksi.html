@@ -20,21 +20,26 @@
 
     <div class="flex h-screen overflow-hidden">
         
-        <aside id="sidebar" class="fixed inset-y-0 left-0 z-50 w-64 bg-white border-r border-gray-200 flex flex-col transition-transform duration-300 transform -translate-x-full md:translate-x-0 md:static md:flex">
-            <div class="h-16 flex items-center justify-center border-b border-gray-100 relative">
-                <h1 class="text-2xl font-bold text-emerald-600">Dash<span class="text-amber-500">Gold</span></h1>
-                <button onclick="toggleSidebar()" class="absolute right-4 top-5 text-gray-500 md:hidden">
+        <aside id="sidebar" class="fixed inset-y-0 left-0 z-50 w-56 bg-white border-r border-gray-200 flex flex-col transition-transform duration-300 transform -translate-x-full md:translate-x-0 md:static md:flex">
+           <div class="h-16 flex items-center justify-between md:justify-center px-4 border-b border-gray-100 relative">
+                <div class="flex items-center gap-3">
+                    <img src="logo.png" alt="Logo Icon" class="h-12 w-auto object-contain">
+
+                    <img src="namalogo.png" alt="Nama Logo" class="h-5 w-auto object-contain">
+                </div>
+
+                <button onclick="toggleSidebar()" class="text-gray-500 md:hidden">
                     <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
                 </button>
             </div>
             <nav class="flex-1 px-4 py-6 space-y-2">
-                <a href="index.html" class="flex items-center px-4 py-3 text-gray-600 hover:bg-gray-50 rounded-lg transition">
+                <a href="index.html" class="flex items-center px-4 py-3 text-gray-600 hover:bg-gray-50 text-sm rounded-lg transition">
                     Dashboard
                 </a>
-                <a href="stok.html" class="flex items-center px-4 py-3 text-gray-600 hover:bg-gray-50 rounded-lg transition">
+                <a href="stok.html" class="flex items-center px-4 py-3 text-gray-600 hover:bg-gray-50 rounded-lg text-sm transition">
                     Stok
                 </a>
-                <a href="transaksi.html" class="flex items-center px-4 py-3 bg-emerald-50 text-emerald-700 rounded-lg font-semibold">
+                <a href="transaksi.html" class="flex items-center px-4 py-3 bg-emerald-50 text-emerald-700 rounded-lg text-sm font-semibold">
                     Riwayat Transaksi
                 </a>
             </nav>
