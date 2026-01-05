@@ -17,21 +17,27 @@
 
     <div class="flex h-screen overflow-hidden">
         
-        <aside id="sidebar" class="fixed inset-y-0 left-0 z-50 w-64 bg-white border-r border-gray-200 flex flex-col transition-transform duration-300 transform -translate-x-full md:translate-x-0 md:static md:flex">
-            <div class="h-16 flex items-center justify-center border-b border-gray-100 relative">
-                <h1 class="text-2xl font-bold text-emerald-600">Dash<span class="text-amber-500">Gold</span></h1>
-                <button onclick="toggleSidebar()" class="absolute right-4 top-5 text-gray-500 md:hidden">
+        <aside id="sidebar" class="fixed inset-y-0 left-0 z-50 w-56 bg-white border-r border-gray-200 flex flex-col transition-transform duration-300 transform -translate-x-full md:translate-x-0 md:static md:flex">
+           <div class="h-16 flex items-center justify-between md:justify-center px-4 border-b border-gray-100 relative">
+                <div class="flex items-center gap-3">
+                    <img src="logo.png" alt="Logo Icon" class="h-12 w-auto object-contain">
+
+                    <img src="namalogo.png" alt="Nama Logo" class="h-5 w-auto object-contain">
+                </div>
+
+                <button onclick="toggleSidebar()" class="text-gray-500 md:hidden">
                     <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
                 </button>
             </div>
+            
             <nav class="flex-1 px-4 py-6 space-y-2">
-                <a href="index.html" class="flex items-center px-4 py-3 bg-emerald-50 text-emerald-700 rounded-lg font-semibold">
+                <a href="index.html" class="flex items-center px-4 py-3 bg-emerald-50 text-emerald-700 rounded-lg text-sm font-semibold">
                     Dashboard
                 </a>
-                <a href="stok.html" class="flex items-center px-4 py-3 text-gray-600 hover:bg-gray-50 rounded-lg transition">
+                <a href="stok.html" class="flex items-center px-4 py-3 text-gray-600 hover:bg-gray-50 rounded-lg text-sm transition">
                     Stok
                 </a>
-                <a href="transaksi.html" class="flex items-center px-4 py-3 text-gray-600 hover:bg-gray-50 rounded-lg transition">
+                <a href="transaksi.html" class="flex items-center px-4 py-3 text-gray-600 hover:bg-gray-50 rounded-lg text-sm transition">
                     Riwayat Transaksi
                 </a>
             </nav>
@@ -57,13 +63,13 @@
 
                 <div class="bg-white border border-gray-200 px-3 py-2 rounded-lg text-xs md:text-sm font-medium text-gray-600 shadow-sm flex items-center gap-2">
                     <span class="relative flex h-2 w-2 md:h-3 md:w-3">
-                      <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
-                      <span class="relative inline-flex rounded-full h-2 w-2 md:h-3 md:w-3 bg-emerald-500"></span>
+                        <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+                        <span class="relative inline-flex rounded-full h-2 w-2 md:h-3 md:w-3 bg-emerald-500"></span>
                     </span>
                     
-                    <span class="block md:hidden">03 Jan 2026</span>
+                    <span id="dateMobile" class="block md:hidden">Loading...</span>
                     
-                    <span class="hidden md:block">Sabtu, 03 Jan 2026</span>
+                    <span id="dateDesktop" class="hidden md:block">Loading...</span>
                 </div>
             </header>
 
@@ -138,7 +144,7 @@
                             <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 7h6m0 3.666A5.976 5.976 0 0112 16.5a5.976 5.976 0 01-4.747-2.327M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg>
                         </div>
                         <div>
-                            <h3 class="font-bold text-gray-800 text-sm md:text-base">Cek Profit Periode Custom</h3>
+                            <h3 class="font-bold text-gray-800 text-sm md:text-base">Cek Profit (Custom)</h3>
                             <p class="text-xs text-gray-500 mt-0.5">Filter laporan berdasarkan rentang tanggal pilihan Anda.</p>
                         </div>
                     </div>
@@ -276,6 +282,29 @@
                 arrow.classList.remove('rotate-180'); // Putar panah ke bawah
             }
         }
+
+        // Fungsi Update Tanggal Otomatis
+        function updateDate() {
+            const dateMobile = document.getElementById('dateMobile');
+            const dateDesktop = document.getElementById('dateDesktop');
+            
+            const now = new Date();
+            
+            // Format untuk Desktop (Lengkap: Senin, 05 Jan 2026)
+            const optionsDesktop = { weekday: 'long', day: '2-digit', month: 'short', year: 'numeric' };
+            const formattedDesktop = new Intl.DateTimeFormat('id-ID', optionsDesktop).format(now);
+            
+            // Format untuk Mobile (Singkat: 05 Jan 2026)
+            const optionsMobile = { day: '2-digit', month: 'short', year: 'numeric' };
+            const formattedMobile = new Intl.DateTimeFormat('id-ID', optionsMobile).format(now);
+
+            // Masukkan ke HTML
+            if(dateDesktop) dateDesktop.innerText = formattedDesktop;
+            if(dateMobile) dateMobile.innerText = formattedMobile;
+        }
+
+        // Jalankan fungsi saat halaman dimuat
+        updateDate();
     </script>
 </body>
 </html>
