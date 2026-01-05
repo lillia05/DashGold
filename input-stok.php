@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Input Stok - DashGold BSI</title>
+    <title>Input Stok - SS Gold</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
@@ -22,7 +22,6 @@
            <div class="h-16 flex items-center justify-between md:justify-center px-4 border-b border-gray-100 relative">
                 <div class="flex items-center gap-3">
                     <img src="logo.png" alt="Logo Icon" class="h-12 w-auto object-contain">
-
                     <img src="namalogo.png" alt="Nama Logo" class="h-5 w-auto object-contain">
                 </div>
 
@@ -31,18 +30,18 @@
                 </button>
             </div>
             <nav class="flex-1 px-4 py-6 space-y-2">
-                <a href="index.html" class="flex items-center px-4 py-3 text-gray-600 hover:bg-gray-50 rounded-lg text-sm transition">
+                <a href="index.php" class="flex items-center px-4 py-3 text-gray-600 hover:bg-gray-50 rounded-lg text-sm transition">
                     Dashboard
                 </a>
-                <a href="stok.html" class="flex items-center px-4 py-3 bg-emerald-50 text-emerald-700 rounded-lg text-sm font-semibold">
+                <a href="stok.php" class="flex items-center px-4 py-3 bg-emerald-50 text-emerald-700 rounded-lg text-sm font-semibold">
                     Stok
                 </a>
-                <a href="transaksi.html" class="flex items-center px-4 py-3 text-gray-600 hover:bg-gray-50 rounded-lg text-sm transition">
+                <a href="transaksi.php" class="flex items-center px-4 py-3 text-gray-600 hover:bg-gray-50 rounded-lg text-sm transition">
                     Riwayat Transaksi
                 </a>
             </nav>
             <div class="p-4 border-t text-xs text-gray-400 text-center">
-                DashGold &copy; 2026
+                SS Gold &copy; <?php echo date('Y'); ?>
             </div>
         </aside>
 
@@ -61,27 +60,27 @@
                         <p class="text-sm text-gray-500 mt-1">Masukkan data lengkap untuk memperbarui inventaris gudang.</p>
                     </div>
                     
-                    <form class="p-6 md:p-10">
+                    <form class="p-6 md:p-10" action="proses_stok.php?act=tambah" method="POST">
                         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                             
                             <div class="col-span-1 md:col-span-2 lg:col-span-3">
                                 <label class="block text-sm font-medium text-gray-700 mb-2">Nama Barang</label>
-                                <input type="text" class="w-full border border-gray-300 rounded-lg p-3 text-sm focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 outline-none transition-all placeholder-gray-400" placeholder="Contoh: Emas Antam 10g">
+                                <input name="nama_barang" type="text" class="w-full border border-gray-300 rounded-lg p-3 text-sm focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 outline-none transition-all placeholder-gray-400" placeholder="Contoh: Emas Antam 10g" required>
                             </div>
 
                             <div>
                                 <label class="block text-sm font-medium text-gray-700 mb-2">Supplier</label>
-                                <input type="text" class="w-full border border-gray-300 rounded-lg p-3 text-sm focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 outline-none placeholder-gray-400" placeholder="Nama Supplier">
+                                <input name="supplier" type="text" class="w-full border border-gray-300 rounded-lg p-3 text-sm focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 outline-none placeholder-gray-400" placeholder="Nama Supplier" required>
                             </div>
 
                             <div>
                                 <label class="block text-sm font-medium text-gray-700 mb-2">Jumlah Stok (Gr)</label>
-                                <input type="number" class="w-full border border-gray-300 rounded-lg p-3 text-sm focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 outline-none placeholder-gray-400" placeholder="0">
+                                <input name="berat" type="number" step="0.01" class="w-full border border-gray-300 rounded-lg p-3 text-sm focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 outline-none placeholder-gray-400" placeholder="0" required>
                             </div>
 
                             <div>
                                 <label class="block text-sm font-medium text-gray-700 mb-2">Status Barang</label>
-                                <select class="w-full border border-gray-300 rounded-lg p-3 text-sm bg-white focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 outline-none cursor-pointer">
+                                <select name="status" class="w-full border border-gray-300 rounded-lg p-3 text-sm bg-white focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 outline-none cursor-pointer">
                                     <option value="available">Tersedia</option>
                                     <option value="sold">Terjual</option>
                                 </select>
@@ -89,24 +88,24 @@
 
                             <div>
                                 <label class="block text-sm font-medium text-gray-700 mb-2">Tanggal Beli</label>
-                                <input type="date" class="w-full border border-gray-300 rounded-lg p-3 text-sm focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 outline-none text-gray-600">
+                                <input name="tanggal_beli" type="date" value="<?php echo date('Y-m-d'); ?>" class="w-full border border-gray-300 rounded-lg p-3 text-sm focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 outline-none text-gray-600" required>
                             </div>
 
                             <div class="col-span-1 md:col-span-2">
                                 <label class="block text-sm font-medium text-gray-700 mb-2">Harga Beli (Total)</label>
                                 <div class="relative">
                                     <span class="absolute left-4 top-3 text-gray-500 text-sm font-medium">Rp</span>
-                                    <input type="number" class="w-full border border-gray-300 rounded-lg pl-12 p-3 text-sm focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 outline-none placeholder-gray-400" placeholder="0">
+                                    <input name="harga_beli" type="number" class="w-full border border-gray-300 rounded-lg pl-12 p-3 text-sm focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 outline-none placeholder-gray-400" placeholder="0" required>
                                 </div>
                             </div>
 
                         </div>
 
                         <div class="flex items-center justify-end gap-4 pt-10 mt-10 border-t border-gray-100">
-                            <a href="stok.html" class="px-8 py-3 text-gray-600 hover:bg-gray-100 rounded-lg text-sm font-medium transition">
+                            <a href="stok.php" class="px-8 py-3 text-gray-600 hover:bg-gray-100 rounded-lg text-sm font-medium transition">
                                 Batal
                             </a>
-                            <button type="button" onclick="simpanData()" class="bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-3 px-12 rounded-lg shadow-md hover:shadow-lg transition text-sm flex items-center gap-2">
+                            <button type="submit" class="bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-3 px-12 rounded-lg shadow-md hover:shadow-lg transition text-sm flex items-center gap-2">
                                 Simpan Data Stok
                             </button>
                         </div>
@@ -128,11 +127,6 @@
                 sidebar.classList.add('-translate-x-full');
                 overlay.classList.add('hidden');
             }
-        }
-
-        function simpanData() {
-            alert('Data Stok Berhasil Disimpan!');
-            window.location.href = 'stok.html'; 
         }
     </script>
 </body>
