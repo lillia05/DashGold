@@ -22,6 +22,42 @@ $query = "SELECT t.*, s.nama_barang, s.supplier, s.berat, s.tanggal_beli, s.harg
 
 $result = mysqli_query($conn, $query);
 $totalData = mysqli_num_rows($result);
+
+$limit = 10; 
+$page = isset($_GET['page']) ? (int)$_GET['page'] : 1;
+$page = ($page < 1) ? 1 : $page;
+$offset = ($page - 1) * $limit;
+
+$where = "WHERE 1=1";
+
+if (isset($_GET['search']) && !empty($_GET['search'])) {
+    $search = mysqli_real_escape_string($conn, $_GET['search']);
+    $where .= " AND (t.nama_pembeli LIKE '%$search%' OR s.nama_barang LIKE '%$search%')";
+}
+
+if (isset($_GET['dari']) && !empty($_GET['dari']) && isset($_GET['sampai']) && !empty($_GET['sampai'])) {
+    $dari = $_GET['dari'];
+    $sampai = $_GET['sampai'];
+    $where .= " AND (t.tanggal_jual BETWEEN '$dari' AND '$sampai')";
+}
+
+$queryCount = "SELECT COUNT(*) as total FROM transactions t JOIN stocks s ON t.stock_id = s.id $where";
+$resultCount = mysqli_query($conn, $queryCount);
+$rowCount = mysqli_fetch_assoc($resultCount);
+$totalData = $rowCount['total'];
+$totalPages = ceil($totalData / $limit);
+
+$query = "SELECT t.*, s.nama_barang, s.supplier, s.berat, s.tanggal_beli, s.harga_beli_total 
+          FROM transactions t 
+          JOIN stocks s ON t.stock_id = s.id 
+          $where 
+          ORDER BY t.tanggal_jual DESC 
+          LIMIT $limit OFFSET $offset";
+
+$result = mysqli_query($conn, $query);
+
+$firstItem = ($totalData > 0) ? ($offset + 1) : 0;
+$lastItem = ($offset + $limit < $totalData) ? ($offset + $limit) : $totalData;
 ?>
 
 <!DOCTYPE html>
@@ -171,8 +207,36 @@ $totalData = mysqli_num_rows($result);
                         </tbody>
                     </table>
                 </div>
-                <div class="px-6 py-4 border-t border-gray-100 flex items-center justify-between bg-gray-50">
-                    <span class="text-xs text-gray-500">Menampilkan <?= $totalData; ?> data transaksi</span>
+            </div>
+
+            <div class="px-6 py-4 border-t border-gray-100 bg-gray-50 flex flex-col md:flex-row items-center justify-between gap-4">
+                <span class="text-xs text-gray-500">
+                    Menampilkan <b><?= $firstItem; ?></b> - <b><?= $lastItem; ?></b> dari <b><?= $totalData; ?></b> transaksi
+                </span>
+                
+                <div class="flex gap-1">
+                    <?php if($page > 1): ?>
+                        <a href="?<?= http_build_query(array_merge($_GET, ['page' => $page - 1])) ?>" class="px-3 py-1 text-xs border rounded bg-white text-gray-600 hover:bg-gray-100 transition">Prev</a>
+                    <?php else: ?>
+                        <button class="px-3 py-1 text-xs border rounded bg-gray-100 text-gray-400 cursor-not-allowed">Prev</button>
+                    <?php endif; ?>
+
+                    <?php 
+                    $startPage = max(1, $page - 2);
+                    $endPage = min($totalPages, $page + 2);
+                    
+                    for($i = $startPage; $i <= $endPage; $i++): 
+                    ?>
+                        <a href="?<?= http_build_query(array_merge($_GET, ['page' => $i])) ?>" class="px-3 py-1 text-xs border rounded <?= ($i == $page) ? 'bg-emerald-600 text-white border-emerald-600' : 'bg-white text-gray-600 hover:bg-gray-50' ?>">
+                            <?= $i; ?>
+                        </a>
+                    <?php endfor; ?>
+
+                    <?php if($page < $totalPages): ?>
+                        <a href="?<?= http_build_query(array_merge($_GET, ['page' => $page + 1])) ?>" class="px-3 py-1 text-xs border rounded bg-white text-gray-600 hover:bg-gray-100 transition">Next</a>
+                    <?php else: ?>
+                        <button class="px-3 py-1 text-xs border rounded bg-gray-100 text-gray-400 cursor-not-allowed">Next</button>
+                    <?php endif; ?>
                 </div>
             </div>
 
