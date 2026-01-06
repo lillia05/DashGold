@@ -275,12 +275,15 @@ $lastItem = ($offset + $limit < $totalData) ? ($offset + $limit) : $totalData;
 
             <div id="modalDetail" class="fixed inset-0 bg-gray-900 bg-opacity-50 hidden flex items-center justify-center z-50 backdrop-blur-sm p-4">
                 <div class="bg-white rounded-xl w-full max-w-2xl shadow-2xl transform transition-all scale-100 max-h-[90vh] overflow-y-auto">
-                    <div class="p-6 border-b border-gray-100 flex justify-between items-center sticky top-0 bg-white z-10">
+                    <div class="p-6 border-b border-gray-100 flex items-center justify-between sticky top-0 bg-white z-10">
                         <div>
                             <h3 class="font-bold text-lg text-gray-900">Detail Data Stok</h3>
                             <p class="text-xs text-gray-500 mt-0.5">Informasi lengkap barang ini.</p>
                         </div>
-                        <span id="detailBadge" class="px-4 py-1.5 text-xs font-bold uppercase rounded-full border tracking-wide">Status</span>
+                        <div class="flex items-center gap-5">
+                            <span id="detailBadge" class="px-4 py-1.5 text-xs font-bold uppercase rounded-full border tracking-wide">Status</span>
+                            <button onclick="tutupModalDetail()" class="text-gray-400 hover:text-red-500 transition text-2xl">&times;</button>
+                        </div>
                     </div>
                     <div class="p-6">
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -311,6 +314,7 @@ $lastItem = ($offset + $limit < $totalData) ? ($offset + $limit) : $totalData;
                                     <input type="text" id="detailHarga" class="w-full bg-gray-50 border border-gray-200 rounded-lg pl-10 p-3 text-sm font-bold text-gray-900 focus:outline-none" readonly>
                                 </div>
                             </div>
+                            
                             <div class="col-span-1 md:col-span-2 hidden" id="infoTerjual">
                                 <label class="block text-sm font-medium text-gray-500 mb-2">Status Barang Saat Ini</label>
                                 <div class="w-full bg-red-50 border border-red-100 rounded-lg p-3 text-sm font-bold text-red-700 flex items-center gap-2">
@@ -319,6 +323,7 @@ $lastItem = ($offset + $limit < $totalData) ? ($offset + $limit) : $totalData;
                                 </div>
                             </div>
                         </div>
+
                         <div class="mt-8 pt-6 border-t border-gray-100 hidden" id="infoRiwayat">
                             <h3 class="text-sm font-bold text-gray-900 mb-4">Riwayat Penjualan Terkait</h3>
                             <div class="bg-blue-50 border border-blue-100 rounded-lg p-4 flex justify-between items-center">
@@ -332,6 +337,7 @@ $lastItem = ($offset + $limit < $totalData) ? ($offset + $limit) : $totalData;
                                 </div>
                             </div>
                         </div>
+
                         <div class="flex justify-end gap-3 mt-6 pt-4">
                             <button type="button" onclick="tutupModalDetail()" class="bg-gray-100 hover:bg-gray-200 text-gray-700 font-bold py-2.5 px-6 rounded-lg transition text-sm">Tutup</button>
                         </div>
@@ -480,7 +486,6 @@ $lastItem = ($offset + $limit < $totalData) ? ($offset + $limit) : $totalData;
             document.getElementById('detailSupplier').value = supplier;
             document.getElementById('detailStok').value = stok + ' Gr';
             document.getElementById('detailTgl').value = tgl;
-            
             document.getElementById('detailHarga').value = harga; 
             
             const badge = document.getElementById('detailBadge');
