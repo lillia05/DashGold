@@ -35,14 +35,14 @@ $rowStock = mysqli_fetch_assoc($queryStock);
 $stockGudang = $rowStock['total_berat'] ?? 0;
 
 $queryTopBuyers = mysqli_query($conn, "SELECT t.nama_pembeli, 
-                                              SUM(t.harga_jual_total) as total_belanja, 
                                               SUM(t.profit) as total_profit,
                                               SUM(s.berat) as total_berat
                                        FROM transactions t
                                        JOIN stocks s ON t.stock_id = s.id
-                                       WHERE DATE(t.tanggal_jual) = '$hariIni' 
+                                       WHERE MONTH(t.tanggal_jual) = MONTH('$hariIni') 
+                                       AND YEAR(t.tanggal_jual) = YEAR('$hariIni')
                                        GROUP BY t.nama_pembeli 
-                                       ORDER BY total_belanja DESC 
+                                       ORDER BY total_profit DESC 
                                        LIMIT 3");
 
 $queryRecent = mysqli_query($conn, "SELECT t.*, s.nama_barang, s.supplier, s.berat 
@@ -261,8 +261,9 @@ $bulan_tahun_indo = "$bulan_indo $tahun_angka";
                         <div class="p-1.5 bg-pink-100 rounded-md text-pink-600">
                             <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path></svg>
                         </div>
-                        <h3 class="font-bold text-gray-900 text-sm">Top Pembeli Hari Ini</h3>
+                        <h3 class="font-bold text-gray-900 text-sm">Top Pembeli Bulan Ini</h3>
                     </div>
+                    <span class="text-xs font-medium text-pink-600"><?php echo $bulan_tahun_indo; ?></span>
                 </div>
                 <div class="overflow-x-auto">
                     <table class="w-full text-left whitespace-nowrap text-sm">
@@ -270,8 +271,8 @@ $bulan_tahun_indo = "$bulan_indo $tahun_angka";
                             <tr>
                                 <th class="px-6 py-3 font-semibold">No</th>
                                 <th class="px-6 py-3 font-semibold">Nama Pembeli</th>
-                                <th class="px-6 py-3 font-semibold text-center">Total Berat(Gr)</th> <th class="px-6 py-3 font-semibold text-right">Total Belanja</th>
-                                <th class="px-6 py-3 font-semibold text-right text-emerald-600">Profit</th>
+                                <th class="px-6 py-3 font-semibold text-center">Total (Gr)</th>
+                                <th class="px-6 py-3 font-semibold text-right text-emerald-600">Total Profit</th>
                             </tr>
                         </thead>
                         <tbody class="divide-y divide-gray-50">
@@ -287,13 +288,12 @@ $bulan_tahun_indo = "$bulan_indo $tahun_angka";
                                 <td class="px-6 py-3 text-center font-medium text-gray-700 bg-gray-50/50">
                                     <?= $beratBersih; ?> gr
                                 </td>
-                                <td class="px-6 py-3 text-right font-medium text-gray-700">Rp <?= number_format($rowBuyer['total_belanja'], 0, ',', '.'); ?></td>
                                 <td class="px-6 py-3 text-right font-bold text-emerald-600">+ Rp <?= number_format($rowBuyer['total_profit'], 0, ',', '.'); ?></td>
                             </tr>
                             <?php 
                                 } 
                             } else {
-                                echo '<tr><td colspan="5" class="px-6 py-6 text-center text-gray-400 italic text-xs">Belum ada penjualan hari ini.</td></tr>';
+                                echo '<tr><td colspan="4" class="px-6 py-6 text-center text-gray-400 italic text-xs">Belum ada penjualan bulan ini.</td></tr>';
                             }
                             ?>
                         </tbody>
