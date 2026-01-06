@@ -34,12 +34,16 @@ $queryStock = mysqli_query($conn, "SELECT SUM(berat) as total_berat FROM stocks 
 $rowStock = mysqli_fetch_assoc($queryStock);
 $stockGudang = $rowStock['total_berat'] ?? 0;
 
-$queryTopBuyers = mysqli_query($conn, "SELECT nama_pembeli, SUM(harga_jual_total) as total_belanja, SUM(profit) as total_profit
-                                      FROM transactions 
-                                      WHERE DATE(tanggal_jual) = '$hariIni' 
-                                      GROUP BY nama_pembeli 
-                                      ORDER BY total_belanja DESC 
-                                      LIMIT 3");
+$queryTopBuyers = mysqli_query($conn, "SELECT t.nama_pembeli, 
+                                              SUM(t.harga_jual_total) as total_belanja, 
+                                              SUM(t.profit) as total_profit,
+                                              SUM(s.berat) as total_berat
+                                       FROM transactions t
+                                       JOIN stocks s ON t.stock_id = s.id
+                                       WHERE DATE(t.tanggal_jual) = '$hariIni' 
+                                       GROUP BY t.nama_pembeli 
+                                       ORDER BY total_belanja DESC 
+                                       LIMIT 3");
 
 $queryRecent = mysqli_query($conn, "SELECT t.*, s.nama_barang, s.supplier, s.berat 
                                     FROM transactions t 
@@ -136,7 +140,7 @@ $bulan_tahun_indo = "$bulan_indo $tahun_angka";
 
             <div class="grid grid-cols-2 lg:grid-cols-4 gap-3 md:gap-6 mb-8">
                 
-                <div class="bg-white p-4 md:p-6 rounded-xl shadow-sm border-t-4 border-teal-600 flex flex-col justify-between relative overflow-hidden transition-transform duration-300 hover:-translate-y-1 hover:shadow-lg group">
+                <a href="transaksi.php" class="bg-white p-4 md:p-6 rounded-xl shadow-sm border-t-4 border-teal-600 flex flex-col justify-between relative overflow-hidden transition-transform duration-300 hover:-translate-y-1 hover:shadow-lg group cursor-pointer">
                     <div class="flex justify-between items-center mb-2">
                         <div>
                             <p class="text-[10px] md:text-sm text-gray-500 font-semibold uppercase tracking-wider">Profit Hari Ini</p>
@@ -151,9 +155,9 @@ $bulan_tahun_indo = "$bulan_indo $tahun_angka";
                     <div class="flex items-center text-[10px] md:text-xs font-medium text-teal-700">
                         <span class="bg-teal-50 px-1.5 py-0.5 md:px-2 md:py-1 rounded-full whitespace-nowrap"><?php echo $tanggal_lengkap_indo; ?></span>
                     </div>
-                </div>
+                </a>
 
-                <div class="bg-white p-4 md:p-6 rounded-xl shadow-sm border-t-4 border-sky-500 flex flex-col justify-between relative overflow-hidden transition-transform duration-300 hover:-translate-y-1 hover:shadow-lg group">
+                <a href="transaksi.php" class="bg-white p-4 md:p-6 rounded-xl shadow-sm border-t-4 border-sky-500 flex flex-col justify-between relative overflow-hidden transition-transform duration-300 hover:-translate-y-1 hover:shadow-lg group cursor-pointer">
                     <div class="flex justify-between items-center mb-2">
                         <div>
                             <p class="text-[10px] md:text-sm text-gray-500 font-semibold uppercase tracking-wider">Minggu Ini</p>
@@ -168,9 +172,9 @@ $bulan_tahun_indo = "$bulan_indo $tahun_angka";
                     <div class="flex items-center text-[10px] md:text-xs font-medium text-sky-700">
                         <span class="bg-sky-50 px-1.5 py-0.5 md:px-2 md:py-1 rounded-full whitespace-nowrap">Senin-Minggu</span>
                     </div>
-                </div>
+                </a>
 
-                <div class="bg-white p-4 md:p-6 rounded-xl shadow-sm border-t-4 border-blue-700 flex flex-col justify-between relative overflow-hidden transition-transform duration-300 hover:-translate-y-1 hover:shadow-lg group">
+                <a href="transaksi.php" class="bg-white p-4 md:p-6 rounded-xl shadow-sm border-t-4 border-blue-700 flex flex-col justify-between relative overflow-hidden transition-transform duration-300 hover:-translate-y-1 hover:shadow-lg group cursor-pointer">
                     <div class="flex justify-between items-center mb-2">
                         <div>
                             <p class="text-[10px] md:text-sm text-gray-500 font-semibold uppercase tracking-wider">Bulan Ini</p>
@@ -185,9 +189,9 @@ $bulan_tahun_indo = "$bulan_indo $tahun_angka";
                     <div class="flex items-center text-[10px] md:text-xs font-medium text-blue-800">
                         <span class="bg-blue-50 px-1.5 py-0.5 md:px-2 md:py-1 rounded-full whitespace-nowrap"><?php echo $bulan_tahun_indo; ?></span>
                     </div>
-                </div>
+                </a>
 
-                <div class="bg-white p-4 md:p-6 rounded-xl shadow-sm border-t-4 border-orange-500 flex flex-col justify-between relative overflow-hidden transition-transform duration-300 hover:-translate-y-1 hover:shadow-lg group">
+                <a href="stok.php" class="bg-white p-4 md:p-6 rounded-xl shadow-sm border-t-4 border-orange-500 flex flex-col justify-between relative overflow-hidden transition-transform duration-300 hover:-translate-y-1 hover:shadow-lg group cursor-pointer">
                     <div class="flex justify-between items-center mb-2">
                         <div>
                             <p class="text-[10px] md:text-sm text-gray-500 font-semibold uppercase tracking-wider">Stok Gudang</p>
@@ -200,7 +204,7 @@ $bulan_tahun_indo = "$bulan_indo $tahun_angka";
                     <div class="flex items-center text-[10px] md:text-xs font-medium text-orange-700">
                         <span class="bg-orange-50 px-1.5 py-0.5 md:px-2 md:py-1 rounded-full whitespace-nowrap">Siap Jual</span>
                     </div>
-                </div>
+                </a>
             </div>
 
             <div class="mb-8 w-full">
@@ -259,15 +263,14 @@ $bulan_tahun_indo = "$bulan_indo $tahun_angka";
                         </div>
                         <h3 class="font-bold text-gray-900 text-sm">Top Pembeli Hari Ini</h3>
                     </div>
-                    <span class="text-xs font-medium text-pink-600"><?php echo $tanggal_lengkap_indo; ?></span>
                 </div>
                 <div class="overflow-x-auto">
                     <table class="w-full text-left whitespace-nowrap text-sm">
-                        <thead class="bg-white text-gray-500 uppercase text-xs border-b border-gray-100">
+                        <thead class="bg-white text-gray-500 uppercase text-[10px] border-b border-gray-100">
                             <tr>
                                 <th class="px-6 py-3 font-semibold">No</th>
                                 <th class="px-6 py-3 font-semibold">Nama Pembeli</th>
-                                <th class="px-6 py-3 font-semibold text-right">Total Pembelian</th>
+                                <th class="px-6 py-3 font-semibold text-center">Total Berat(Gr)</th> <th class="px-6 py-3 font-semibold text-right">Total Belanja</th>
                                 <th class="px-6 py-3 font-semibold text-right text-emerald-600">Profit</th>
                             </tr>
                         </thead>
@@ -276,17 +279,21 @@ $bulan_tahun_indo = "$bulan_indo $tahun_angka";
                             $noBuyer = 1;
                             if(mysqli_num_rows($queryTopBuyers) > 0) {
                                 while($rowBuyer = mysqli_fetch_assoc($queryTopBuyers)) { 
+                                    $beratBersih = $rowBuyer['total_berat'] + 0; 
                             ?>
                             <tr class="hover:bg-pink-50/30 transition-colors">
                                 <td class="px-6 py-3 text-gray-400 font-medium"><?= $noBuyer++; ?></td>
                                 <td class="px-6 py-3 font-bold text-gray-800"><?= $rowBuyer['nama_pembeli']; ?></td>
+                                <td class="px-6 py-3 text-center font-medium text-gray-700 bg-gray-50/50">
+                                    <?= $beratBersih; ?> gr
+                                </td>
                                 <td class="px-6 py-3 text-right font-medium text-gray-700">Rp <?= number_format($rowBuyer['total_belanja'], 0, ',', '.'); ?></td>
                                 <td class="px-6 py-3 text-right font-bold text-emerald-600">+ Rp <?= number_format($rowBuyer['total_profit'], 0, ',', '.'); ?></td>
                             </tr>
                             <?php 
                                 } 
                             } else {
-                                echo '<tr><td colspan="4" class="px-6 py-6 text-center text-gray-400 italic text-xs">Belum ada penjualan hari ini.</td></tr>';
+                                echo '<tr><td colspan="5" class="px-6 py-6 text-center text-gray-400 italic text-xs">Belum ada penjualan hari ini.</td></tr>';
                             }
                             ?>
                         </tbody>

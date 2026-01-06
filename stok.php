@@ -266,7 +266,7 @@ $lastItem = ($offset + $limit < $totalData) ? ($offset + $limit) : $totalData;
                             </div>
                         </div>
                         <div class="flex items-center justify-end gap-3 pt-8 mt-4 border-t border-gray-100">
-                            <button type="button" onclick="tutupModalEdit()" class="px-6 py-2.5 text-gray-600 hover:bg-gray-100 rounded-lg text-sm font-medium transition">Batal</button>
+                            <button type="button" onclick="tutupModalEdit()" class="px-6 py-2.5 text-gray-600 hover:bg-gray-100 border border-emerald-700 rounded-lg text-sm font-medium transition">Batal</button>
                             <button type="submit" class="bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-2.5 px-8 rounded-lg shadow-md transition text-sm">Simpan Perubahan</button>
                         </div>
                     </form>
@@ -339,7 +339,7 @@ $lastItem = ($offset + $limit < $totalData) ? ($offset + $limit) : $totalData;
                         </div>
 
                         <div class="flex justify-end gap-3 mt-6 pt-4">
-                            <button type="button" onclick="tutupModalDetail()" class="bg-gray-100 hover:bg-gray-200 text-gray-700 font-bold py-2.5 px-6 rounded-lg transition text-sm">Tutup</button>
+                            <button type="button" onclick="tutupModalDetail()" class="hover:bg-gray-200 text-gray-700 font-bold py-2.5 px-6 border border-emerald-700 rounded-lg transition text-sm">Tutup</button>
                         </div>
                     </div>
                 </div>
@@ -386,7 +386,7 @@ $lastItem = ($offset + $limit < $totalData) ? ($offset + $limit) : $totalData;
                 <h3 class="text-xl font-bold text-gray-900 mb-2">Hapus Data?</h3>
                 <p class="text-sm text-gray-500">Anda yakin ingin menghapus <span id="namaBarangHapus" class="font-bold text-gray-900"></span>? Tindakan ini permanen.</p>
                 <div class="flex w-full gap-3 mt-8">
-                    <button onclick="tutupModalHapus()" class="flex-1 px-4 py-2.5 bg-gray-100 text-gray-700 rounded-xl text-sm font-bold hover:bg-gray-200 transition">Batal</button>
+                    <button onclick="tutupModalHapus()" class="flex-1 px-4 py-2.5 text-gray-700 border border-red-700 rounded-xl text-sm font-bold hover:bg-gray-200 transition">Batal</button>
                     <button onclick="eksekusiHapus()" class="flex-1 px-4 py-2.5 bg-red-600 text-white rounded-xl text-sm font-bold hover:bg-red-700 transition">Hapus</button>
                 </div>
             </div>
