@@ -119,10 +119,10 @@
             </div>
 
             <div class="mb-8 flex justify-end">
-                <a href="input-keuangan.html" class="bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-2.5 px-6 rounded-lg shadow-sm shadow-emerald-200 transition flex items-center gap-2 text-sm w-full md:w-auto justify-center">
+                <button onclick="bukaModalKeuangan()" class="bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-2.5 px-6 rounded-lg shadow-sm shadow-emerald-200 transition flex items-center gap-2 text-sm w-full md:w-auto justify-center">
                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path></svg>
                     <span>Input Keuangan</span>
-                </a>
+                </button>
             </div>
 
             <div class="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden">
@@ -131,7 +131,7 @@
                     <h3 class="font-bold text-gray-900 text-sm md:text-base">Riwayat Keuangan</h3>
                     
                     <div class="relative">
-                        <select class="pl-3 pr-8 py-2 text-xs border border-gray-300 rounded-lg bg-white focus:outline-none focus:ring-1 focus:ring-emerald-500 cursor-pointer shadow-sm">
+                        <select class="pl-3 pr-8 py-2 text-xs border border-gray-300 rounded-lg bg-white focus:outline-none focus:ring-2 focus:ring-emerald-500 cursor-pointer shadow-sm">
                             <option>Semua Kategori</option>
                             <option>Modal</option>
                             <option>Prive</option>
@@ -228,7 +228,7 @@
                     </table>
                 </div>
             </div>
-
+            
             <div id="modalKeuangan" class="fixed inset-0 bg-gray-900 bg-opacity-50 hidden flex items-center justify-center z-50 backdrop-blur-sm p-4">
                 <div class="bg-white rounded-xl w-full max-w-lg shadow-2xl transform transition-all">
                     
