@@ -50,13 +50,13 @@
                     </button>
                     <div>
                         <h2 class="text-2xl font-bold text-gray-900">Laporan Keuangan</h2>
-                        <p class="text-sm text-gray-500 mt-1">Kelola Modal, Prive, Hutang, dan Piutang Usaha.</p>
+                        <p class="text-sm text-gray-500 mt-1">Kelola Modal, Prive, Hutang, dan Piutang Usaha Anda.</p>
                     </div>
                 </div>
                 
                 <button onclick="bukaModalKeuangan()" class="bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-2.5 px-5 rounded-lg shadow-sm shadow-emerald-200 transition flex items-center gap-2 text-sm w-full md:w-auto justify-center">
                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path></svg>
-                    <span>Input Transaksi</span>
+                    <span>Input Keuangan</span>
                 </button>
             </header>
 
@@ -137,6 +137,7 @@
                             <tr>
                                 <th class="px-6 py-3 font-semibold bg-gray-50/50">No</th>
                                 <th class="px-6 py-3 font-semibold bg-gray-50/50">Tanggal</th>
+                                <th class="px-6 py-3 font-semibold bg-gray-50/50">Nama</th>
                                 <th class="px-6 py-3 font-semibold bg-gray-50/50">Kategori</th>
                                 <th class="px-6 py-3 font-semibold bg-gray-50/50">Keterangan</th>
                                 <th class="px-6 py-3 font-semibold bg-gray-50/50 text-right">Jumlah (Rp)</th>
@@ -148,6 +149,7 @@
                             <tr class="hover:bg-gray-50/50 transition">
                                 <td class="px-6 py-4 text-gray-500">1</td>
                                 <td class="px-6 py-4 font-medium text-gray-900">01 Jan 2026</td>
+                                <td class="px-6 py-4 font-medium text-gray-900">Lia</td>
                                 <td class="px-6 py-4">
                                     <span class="px-3 py-1 bg-blue-100 text-blue-700 rounded-full text-xs font-bold border border-blue-200">Modal</span>
                                 </td>
@@ -164,6 +166,7 @@
                             <tr class="hover:bg-gray-50/50 transition">
                                 <td class="px-6 py-4 text-gray-500">2</td>
                                 <td class="px-6 py-4 font-medium text-gray-900">05 Jan 2026</td>
+                                <td class="px-6 py-4 font-medium text-gray-900">Lia</td>
                                 <td class="px-6 py-4">
                                     <span class="px-3 py-1 bg-orange-100 text-orange-700 rounded-full text-xs font-bold border border-orange-200">Prive</span>
                                 </td>
@@ -180,6 +183,7 @@
                             <tr class="hover:bg-gray-50/50 transition">
                                 <td class="px-6 py-4 text-gray-500">3</td>
                                 <td class="px-6 py-4 font-medium text-gray-900">10 Jan 2026</td>
+                                <td class="px-6 py-4 font-medium text-gray-900">Lia</td>
                                 <td class="px-6 py-4">
                                     <span class="px-3 py-1 bg-teal-100 text-teal-700 rounded-full text-xs font-bold border border-teal-200">Hutang</span>
                                 </td>
@@ -196,6 +200,7 @@
                             <tr class="hover:bg-gray-50/50 transition">
                                 <td class="px-6 py-4 text-gray-500">4</td>
                                 <td class="px-6 py-4 font-medium text-gray-900">12 Jan 2026</td>
+                                <td class="px-6 py-4 font-medium text-gray-900">Lia</td>
                                 <td class="px-6 py-4">
                                     <span class="px-3 py-1 bg-red-100 text-red-700 rounded-full text-xs font-bold border border-red-200">Piutang</span>
                                 </td>
@@ -224,14 +229,18 @@
 
                     <form class="p-6">
                         <div class="space-y-4">
-                            
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-2">Nama</label>
+                                <input type="text" class="w-full border border-gray-300 rounded-lg p-2.5 text-sm focus:ring-2 focus:ring-emerald-500 outline-none" placeholder="Contoh: Bapak Budi">
+                            </div>
+
                             <div>
                                 <label class="block text-sm font-medium text-gray-700 mb-2">Jenis Transaksi</label>
                                 <select class="w-full border border-gray-300 rounded-lg p-2.5 text-sm bg-white focus:ring-2 focus:ring-emerald-500 outline-none">
-                                    <option value="modal">Modal (Pemasukan)</option>
-                                    <option value="prive">Prive (Pengeluaran)</option>
-                                    <option value="hutang">Hutang (Kewajiban)</option>
-                                    <option value="piutang">Piutang (Hak Tagih)</option>
+                                    <option value="modal">Modal</option>
+                                    <option value="prive">Prive</option>
+                                    <option value="hutang">Hutang</option>
+                                    <option value="piutang">Piutang</option>
                                 </select>
                             </div>
 
@@ -256,7 +265,7 @@
                         </div>
 
                         <div class="flex justify-end gap-3 mt-8 pt-4 border-t border-gray-100">
-                            <button type="button" onclick="tutupModalKeuangan()" class="px-5 py-2.5 text-gray-600 hover:bg-gray-100 rounded-lg text-sm font-medium">Batal</button>
+                            <button type="button" onclick="tutupModalKeuangan()" class="px-5 py-2.5 text-gray-600 hover:bg-gray-100 rounded-lg border border-emerald-500 font-bold text-sm">Batal</button>
                             <button type="button" onclick="alert('Data Keuangan Disimpan!')" class="bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-2.5 px-6 rounded-lg shadow-sm hover:shadow-md transition text-sm">Simpan</button>
                         </div>
                     </form>
