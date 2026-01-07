@@ -60,60 +60,67 @@
                 </button>
             </header>
 
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6 mb-8">
+            <div class="grid grid-cols-2 lg:grid-cols-4 gap-3 md:gap-6 mb-8">
                 
-                <div class="bg-white p-5 rounded-xl shadow-sm border-t-4 border-blue-600 flex flex-col justify-between">
-                    <div class="flex justify-between items-start mb-2">
-                        <div>
-                            <p class="text-xs font-bold text-gray-500 uppercase tracking-wider">Total Modal</p>
-                            <h3 class="text-xl font-bold text-gray-800 mt-1">Rp 150.000.000</h3>
+                <div class="bg-white p-4 md:p-6 rounded-xl shadow-sm border-t-4 border-blue-600 flex flex-col justify-between relative overflow-hidden transition-transform duration-300 hover:-translate-y-1 hover:shadow-lg group">
+                    <div class="flex justify-between items-center mb-2">
+                        <div class="overflow-hidden">
+                            <p class="text-[10px] md:text-sm text-gray-500 font-semibold uppercase tracking-wider">Total Modal</p>
+                            <h3 class="text-lg md:text-2xl font-bold text-gray-800 mt-1 truncate">Rp150.000.000</h3>
                         </div>
-                        <div class="p-2 rounded-lg bg-blue-100 text-blue-600">
-                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"></path></svg>
-                        </div>
-                    </div>
-                    <p class="text-xs text-blue-600 bg-blue-50 px-2 py-1 rounded w-fit">Aset Bersih</p>
-                </div>
-
-                <div class="bg-white p-5 rounded-xl shadow-sm border-t-4 border-orange-500 flex flex-col justify-between">
-                    <div class="flex justify-between items-start mb-2">
-                        <div>
-                            <p class="text-xs font-bold text-gray-500 uppercase tracking-wider">Total Prive</p>
-                            <h3 class="text-xl font-bold text-gray-800 mt-1">Rp 5.200.000</h3>
-                        </div>
-                        <div class="p-2 rounded-lg bg-orange-100 text-orange-600">
-                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 9V7a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2m2 4h10a2 2 0 002-2v-6a2 2 0 00-2-2H9a2 2 0 00-2 2v6a2 2 0 002 2zm7-5a2 2 0 11-4 0 2 2 0 014 0z"></path></svg>
+                        <div class="p-2 rounded-lg bg-blue-100 text-blue-600 group-hover:scale-110 transition-transform">
+                            <svg class="w-4 h-4 md:w-6 md:h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"></path></svg>
                         </div>
                     </div>
-                    <p class="text-xs text-orange-600 bg-orange-50 px-2 py-1 rounded w-fit">Penarikan Pribadi</p>
+                    <div class="flex items-center text-[10px] md:text-xs font-medium text-blue-600">
+                        <span class="bg-blue-50 px-1.5 py-0.5 md:px-2 md:py-1 rounded-full whitespace-nowrap">Aset Bersih</span>
+                    </div>
                 </div>
 
-                <div class="bg-white p-5 rounded-xl shadow-sm border-t-4 border-teal-600 flex flex-col justify-between">
-                    <div class="flex justify-between items-start mb-2">
-                        <div>
-                            <p class="text-xs font-bold text-gray-500 uppercase tracking-wider">Total Hutang</p>
-                            <h3 class="text-xl font-bold text-gray-800 mt-1">Rp 12.000.000</h3>
+                <div class="bg-white p-4 md:p-6 rounded-xl shadow-sm border-t-4 border-orange-500 flex flex-col justify-between relative overflow-hidden transition-transform duration-300 hover:-translate-y-1 hover:shadow-lg group">
+                    <div class="flex justify-between items-center mb-2">
+                        <div class="overflow-hidden">
+                            <p class="text-[10px] md:text-sm text-gray-500 font-semibold uppercase tracking-wider">Total Prive</p>
+                            <h3 class="text-lg md:text-2xl font-bold text-gray-800 mt-1 truncate">Rp5.200.000</h3>
                         </div>
-                        <div class="p-2 rounded-lg bg-teal-100 text-teal-600">
-                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"></path></svg>
+                        <div class="p-2 rounded-lg bg-orange-100 text-orange-600 group-hover:scale-110 transition-transform">
+                            <svg class="w-4 h-4 md:w-6 md:h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 9V7a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2m2 4h10a2 2 0 002-2v-6a2 2 0 00-2-2H9a2 2 0 00-2 2v6a2 2 0 002 2zm7-5a2 2 0 11-4 0 2 2 0 014 0z"></path></svg>
                         </div>
                     </div>
-                    <p class="text-xs text-teal-600 bg-teal-50 px-2 py-1 rounded w-fit">Kewajiban Bayar</p>
+                    <div class="flex items-center text-[10px] md:text-xs font-medium text-orange-600">
+                        <span class="bg-orange-50 px-1.5 py-0.5 md:px-2 md:py-1 rounded-full whitespace-nowrap">Penarikan</span>
+                    </div>
                 </div>
 
-                <div class="bg-white p-5 rounded-xl shadow-sm border-t-4 border-red-600 flex flex-col justify-between">
-                    <div class="flex justify-between items-start mb-2">
-                        <div>
-                            <p class="text-xs font-bold text-gray-500 uppercase tracking-wider">Total Piutang</p>
-                            <h3 class="text-xl font-bold text-gray-800 mt-1">Rp 8.500.000</h3>
+                <div class="bg-white p-4 md:p-6 rounded-xl shadow-sm border-t-4 border-red-600 flex flex-col justify-between relative overflow-hidden transition-transform duration-300 hover:-translate-y-1 hover:shadow-lg group">
+                    <div class="flex justify-between items-center mb-2">
+                        <div class="overflow-hidden">
+                            <p class="text-[10px] md:text-sm text-gray-500 font-semibold uppercase tracking-wider">Total Hutang</p>
+                            <h3 class="text-lg md:text-2xl font-bold text-gray-800 mt-1 truncate">Rp12.000.000</h3>
                         </div>
-                        <div class="p-2 rounded-lg bg-red-100 text-red-600">
-                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 10l7-7m0 0l7 7m-7-7v18"></path></svg>
+                        <div class="p-2 rounded-lg bg-red-100 text-red-600 group-hover:scale-110 transition-transform">
+                            <svg class="w-4 h-4 md:w-6 md:h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"></path></svg>
                         </div>
                     </div>
-                    <p class="text-xs text-red-600 bg-red-50 px-2 py-1 rounded w-fit">Hak Tagih</p>
+                    <div class="flex items-center text-[10px] md:text-xs font-medium text-red-600">
+                        <span class="bg-red-50 px-1.5 py-0.5 md:px-2 md:py-1 rounded-full whitespace-nowrap">Kewajiban</span>
+                    </div>
                 </div>
 
+                <div class="bg-white p-4 md:p-6 rounded-xl shadow-sm border-t-4 border-teal-600 flex flex-col justify-between relative overflow-hidden transition-transform duration-300 hover:-translate-y-1 hover:shadow-lg group">
+                    <div class="flex justify-between items-center mb-2">
+                        <div class="overflow-hidden">
+                            <p class="text-[10px] md:text-sm text-gray-500 font-semibold uppercase tracking-wider">Total Piutang</p>
+                            <h3 class="text-lg md:text-2xl font-bold text-gray-800 mt-1 truncate">Rp8.500.000</h3>
+                        </div>
+                        <div class="p-2 rounded-lg bg-teal-100 text-teal-600 group-hover:scale-110 transition-transform">
+                            <svg class="w-4 h-4 md:w-6 md:h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 10l7-7m0 0l7 7m-7-7v18"></path></svg>
+                        </div>
+                    </div>
+                    <div class="flex items-center text-[10px] md:text-xs font-medium text-teal-600">
+                        <span class="bg-teal-50 px-1.5 py-0.5 md:px-2 md:py-1 rounded-full whitespace-nowrap">Hak Tagih</span>
+                    </div>
+                </div>
             </div>
 
             <div class="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden">
