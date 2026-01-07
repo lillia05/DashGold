@@ -167,8 +167,12 @@
                                 <td class="px-6 py-3 text-right font-bold text-gray-800">100.000.000</td>
                                 <td class="px-6 py-3 text-center">
                                     <div class="flex items-center justify-center gap-2">
-                                        <button class="text-amber-500 hover:text-amber-700 transition" title="Edit"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"></path></svg></button>
-                                        <button class="text-red-500 hover:text-red-700 transition" title="Hapus"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path></svg></button>
+                                        <button onclick="bukaModalEdit()" class="text-amber-500 hover:text-amber-700 transition" title="Edit">
+                                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"></path></svg>
+                                        </button>
+                                        <button onclick="bukaModalHapus()" class="text-red-500 hover:text-red-700 transition" title="Hapus">
+                                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path></svg>
+                                        </button>
                                     </div>
                                 </td>
                             </tr>
@@ -232,7 +236,7 @@
             <div id="modalKeuangan" class="fixed inset-0 bg-gray-900 bg-opacity-50 hidden flex items-center justify-center z-50 backdrop-blur-sm p-4">
                 <div class="bg-white rounded-xl w-full max-w-lg shadow-2xl transform transition-all">
                     
-                    <div class="p-6 border-b border-gray-100 flex justify-between items-center bg-gray-50 rounded-t-xl">
+                    <div class="p-6 border-b border-gray-100 flex justify-between items-center bg-emerald-50 rounded-t-xl">
                         <h3 class="font-bold text-lg text-gray-800">Input Keuangan</h3>
                         <button onclick="tutupModalKeuangan()" class="text-gray-400 hover:text-red-500 text-2xl font-bold">&times;</button>
                     </div>
@@ -282,6 +286,77 @@
                 </div>
             </div>
 
+            <div id="modalEditKeuangan" class="fixed inset-0 bg-gray-900 bg-opacity-50 hidden flex items-center justify-center z-50 backdrop-blur-sm p-4">
+                <div class="bg-white rounded-xl w-full max-w-lg shadow-2xl transform transition-all">
+                    
+                    <div class="p-6 border-b border-gray-100 flex justify-between items-center bg-amber-50 rounded-t-xl">
+                        <h3 class="font-bold text-lg text-gray-800">Edit Data Keuangan</h3>
+                        <button onclick="tutupModalEdit()" class="text-gray-400 hover:text-red-500 text-2xl font-bold">&times;</button>
+                    </div>
+
+                    <form class="p-6">
+                        <div class="space-y-4">
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-2">Nama</label>
+                                <input type="text" value="Lia" class="w-full border border-gray-300 rounded-lg p-2.5 text-sm focus:ring-2 focus:ring-amber-500 outline-none font-medium text-gray-700">
+                            </div>
+
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-2">Jenis Transaksi</label>
+                                <select class="w-full border border-gray-300 rounded-lg p-2.5 text-sm bg-white focus:ring-2 focus:ring-amber-500 outline-none">
+                                    <option value="modal" selected>Modal</option>
+                                    <option value="prive">Prive</option>
+                                    <option value="hutang">Hutang</option>
+                                    <option value="piutang">Piutang</option>
+                                </select>
+                            </div>
+
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-2">Jumlah (Rp)</label>
+                                <div class="relative">
+                                    <span class="absolute left-3 top-2.5 text-gray-500 text-sm font-bold">Rp</span>
+                                    <input type="number" value="100000000" class="w-full border border-gray-300 rounded-lg pl-10 p-2.5 text-sm focus:ring-2 focus:ring-amber-500 outline-none font-medium text-gray-700">
+                                </div>
+                            </div>
+
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-2">Tanggal</label>
+                                <input type="date" value="2026-01-01" class="w-full border border-gray-300 rounded-lg p-2.5 text-sm text-gray-600 focus:ring-2 focus:ring-amber-500 outline-none">
+                            </div>
+
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-2">Keterangan</label>
+                                <textarea rows="3" class="w-full border border-gray-300 rounded-lg p-2.5 text-sm focus:ring-2 focus:ring-amber-500 outline-none">Setoran modal awal pemilik</textarea>
+                            </div>
+
+                        </div>
+
+                        <div class="flex justify-end gap-3 mt-8 pt-4 border-t border-gray-100">
+                            <button type="button" onclick="tutupModalEdit()" class="px-5 py-2.5 text-gray-600 hover:bg-gray-100 rounded-lg border border-amber-300 font-bold text-sm">Batal</button>
+                            <button type="button" onclick="alert('Perubahan Disimpan!')" class="bg-amber-500 hover:bg-amber-600 text-white font-bold py-2.5 px-6 rounded-lg shadow-sm hover:shadow-md transition text-sm">Simpan Perubahan</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <div id="modalHapus" class="fixed inset-0 bg-gray-900 bg-opacity-50 hidden flex items-center justify-center z-50 backdrop-blur-sm p-4">
+                <div class="bg-white rounded-xl w-full max-w-sm shadow-2xl transform transition-all p-6 text-center">
+                    
+                    <div class="w-14 h-14 bg-red-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <svg class="w-8 h-8 text-red-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path></svg>
+                    </div>
+
+                    <h3 class="text-lg font-bold text-gray-900 mb-2">Hapus Riwayat Keuangan?</h3>
+                    <p class="text-sm text-gray-500 mb-6">Apakah Anda yakin ingin menghapus data ini? Data yang sudah dihapus tidak dapat dikembalikan.</p>
+
+                    <div class="flex gap-3 justify-center">
+                        <button onclick="tutupModalHapus()" class="px-5 py-2.5 text-gray-600 hover:bg-gray-100 rounded-lg border border-red-300 font-bold text-sm w-full transition">Batal</button>
+                        <button onclick="konfirmasiHapus()" class="bg-red-600 hover:bg-red-700 text-white font-bold py-2.5 px-5 rounded-lg shadow-sm hover:shadow-md w-full transition text-sm">Hapus</button>
+                    </div>
+
+                </div>
+            </div>
+
         </main>
     </div>
 
@@ -304,6 +379,26 @@
         }
         function tutupModalKeuangan() {
             document.getElementById('modalKeuangan').classList.add('hidden');
+        }
+
+        // FUNGSI MODAL EDIT (BARU)
+        function bukaModalEdit() {
+            document.getElementById('modalEditKeuangan').classList.remove('hidden');
+        }
+        function tutupModalEdit() {
+            document.getElementById('modalEditKeuangan').classList.add('hidden');
+        }
+
+       // FUNGSI MODAL HAPUS
+        function bukaModalHapus() {
+            document.getElementById('modalHapus').classList.remove('hidden');
+        }
+        function tutupModalHapus() {
+            document.getElementById('modalHapus').classList.add('hidden');
+        }
+        function konfirmasiHapus() {
+            alert('Data Berhasil Dihapus!');
+            tutupModalHapus();
         }
     </script>
 </body>
