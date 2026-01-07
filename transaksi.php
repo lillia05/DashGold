@@ -94,6 +94,9 @@ $lastItem = ($offset + $limit < $totalData) ? ($offset + $limit) : $totalData;
                 <a href="index.php" class="flex items-center px-4 py-3 text-gray-600 hover:bg-gray-50 rounded-lg text-sm transition">Dashboard</a>
                 <a href="stok.php" class="flex items-center px-4 py-3 text-gray-600 hover:bg-gray-50 rounded-lg text-sm transition">Stok</a>
                 <a href="transaksi.php" class="flex items-center px-4 py-3 bg-emerald-50 text-emerald-700 rounded-lg text-sm font-semibold">Riwayat Transaksi</a>
+                <a href="laporan.html" class="flex items-center px-4 py-3 text-gray-600 hover:bg-gray-50 rounded-lg text-sm transition">
+                    Laporan Keuangan
+                </a>
             </nav>
             <div class="p-4 border-t text-xs text-gray-400 text-center">SS Gold &copy; <?php echo date('Y'); ?></div>
         </aside>
