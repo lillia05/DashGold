@@ -1,4 +1,5 @@
 <?php
+include 'cek_session.php';
 include 'koneksi.php';
 
 $where = "WHERE 1=1";
@@ -94,7 +95,7 @@ $lastItem = ($offset + $limit < $totalData) ? ($offset + $limit) : $totalData;
                 <a href="index.php" class="flex items-center px-4 py-3 text-gray-600 hover:bg-gray-50 rounded-lg text-sm transition">Dashboard</a>
                 <a href="stok.php" class="flex items-center px-4 py-3 text-gray-600 hover:bg-gray-50 rounded-lg text-sm transition">Stok</a>
                 <a href="transaksi.php" class="flex items-center px-4 py-3 bg-emerald-50 text-emerald-700 rounded-lg text-sm font-semibold">Riwayat Transaksi</a>
-                <a href="laporan.html" class="flex items-center px-4 py-3 text-gray-600 hover:bg-gray-50 rounded-lg text-sm transition">
+                <a href="laporan.php" class="flex items-center px-4 py-3 text-gray-600 hover:bg-gray-50 rounded-lg text-sm transition">
                     Laporan Keuangan
                 </a>
             </nav>

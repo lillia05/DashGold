@@ -1,3 +1,29 @@
+<?php
+session_start();
+include 'koneksi.php';
+
+if(isset($_SESSION['status']) && $_SESSION['status'] == "login"){
+    header("location:index.php");
+    exit();
+}
+
+if(isset($_POST['pin_kode'])){
+    $pin_input = mysqli_real_escape_string($conn, $_POST['pin_kode']);
+    
+    $query = mysqli_query($conn, "SELECT * FROM admin_access WHERE pin_code = '$pin_input'");
+    
+    $cek = mysqli_num_rows($query);
+    
+    if($cek > 0){
+        $_SESSION['status'] = "login";
+        header("location:index.php");
+        exit();
+    } else {
+        $error_msg = "PIN Tidak Ditemukan!";
+    }
+}
+?>
+
 <!DOCTYPE html>
 <html lang="id">
 <head>
@@ -25,7 +51,7 @@
 
         .pin-input:focus {
             transform: scale(1.1) translateY(-5px);
-            border-color: #f59e0b; /* Amber focus matching gold */
+            border-color: #f59e0b;
             background: white;
             box-shadow: 0 20px 25px -5px rgba(245, 158, 11, 0.1);
         }
@@ -59,19 +85,30 @@
             <p class="text-amber-700 font-bold tracking-widest uppercase text-[10px]">Sistem Autentikasi Keamanan SSGold</p>
         </div>
 
-        <div id="loginCard" class="bg-white/90 backdrop-blur-xl rounded-[3rem] shadow-2xl shadow-slate-300/50 p-10 border border-white">
-            <div class="flex justify-between items-center mb-10">
+        <div id="loginCard" class="bg-white/90 backdrop-blur-xl rounded-[3rem] shadow-2xl shadow-slate-300/50 p-10 border border-white relative">
+            
+            <?php if(isset($error_msg)): ?>
+                <div class="absolute top-4 left-0 right-0 text-center">
+                    <span class="bg-red-100 text-red-600 px-3 py-1 rounded-full text-xs font-bold animate-pulse"><?= $error_msg ?></span>
+                </div>
+            <?php endif; ?>
+
+            <div class="flex justify-between items-center mb-10 mt-2">
                 <div class="text-left">
                     <h2 class="text-xl font-bold text-slate-800 tracking-tight">Verifikasi PIN</h2>
                     <p class="text-slate-400 text-sm">Masukkan 6-digit kode akses</p>
                 </div>
-                <button onclick="togglePinVisibility()" class="p-3 bg-slate-100 hover:bg-amber-50 rounded-2xl text-slate-500 hover:text-amber-600 transition-colors" title="Lihat/Sembunyikan PIN">
+                <button onclick="togglePinVisibility()" type="button" class="p-3 bg-slate-100 hover:bg-amber-50 rounded-2xl text-slate-500 hover:text-amber-600 transition-colors" title="Lihat/Sembunyikan PIN">
                     <svg id="eyeIcon" class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path id="eyePath" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path>
                     </svg>
                 </button>
             </div>
+
+            <form id="formLogin" method="POST" action="">
+                <input type="hidden" name="pin_kode" id="pinHidden">
+            </form>
 
             <div class="flex justify-between gap-3" id="pinInputs">
                 <input type="password" inputmode="numeric" maxlength="1" class="pin-input w-full h-16 text-center text-2xl font-bold bg-slate-50 rounded-2xl outline-none focus:bg-white" autofocus>
@@ -135,31 +172,23 @@
 
         function validatePin() {
             const pinValue = Array.from(inputs).map(i => i.value).join('');
-            const correctPin = "123456";
-
+            
             statusMsg.innerText = "Memverifikasi Akses...";
             statusMsg.className = "h-4 mt-6 text-center text-[10px] font-bold text-amber-600 tracking-[0.2em]";
 
             setTimeout(() => {
-                if (pinValue === correctPin) {
-                    window.location.href = 'index.html';
-                } else {
-                    card.classList.add('error-shake');
-                    statusMsg.innerText = ""; 
-                    
-                    setTimeout(() => {
-                        card.classList.remove('error-shake');
-                        inputs.forEach(i => i.value = "");
-                        inputs[0].focus();
-                    }, 500);
-                }
-            }, 600);
+                // Masukkan PIN ke form hidden dan submit ke PHP
+                document.getElementById('pinHidden').value = pinValue;
+                document.getElementById('formLogin').submit();
+            }, 300);
         }
 
         function checkPinManual() {
             if (Array.from(inputs).some(i => i.value === "")) {
                 statusMsg.innerText = "PIN Belum Lengkap";
                 statusMsg.className = "h-4 mt-6 text-center text-[10px] font-bold text-amber-500 tracking-[0.2em]";
+                card.classList.add('error-shake');
+                setTimeout(() => card.classList.remove('error-shake'), 500);
             } else {
                 validatePin();
             }

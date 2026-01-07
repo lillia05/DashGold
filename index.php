@@ -1,4 +1,5 @@
 <?php
+include 'cek_session.php';
 include 'koneksi.php';
 
 date_default_timezone_set('Asia/Jakarta');
@@ -112,7 +113,7 @@ $bulan_tahun_indo = "$bulan_indo $tahun_angka";
                 <a href="index.php" class="flex items-center px-4 py-3 bg-emerald-50 text-emerald-700 rounded-lg text-sm font-semibold">Dashboard</a>
                 <a href="stok.php" class="flex items-center px-4 py-3 text-gray-600 hover:bg-gray-50 rounded-lg text-sm transition">Stok</a>
                 <a href="transaksi.php" class="flex items-center px-4 py-3 text-gray-600 hover:bg-gray-50 rounded-lg text-sm transition">Riwayat Transaksi</a>
-                <a href="laporan.html" class="flex items-center px-4 py-3 text-gray-600 hover:bg-gray-50 rounded-lg text-sm transition">
+                <a href="laporan.php" class="flex items-center px-4 py-3 text-gray-600 hover:bg-gray-50 rounded-lg text-sm transition">
                     Laporan Keuangan
                 </a>
             </nav>
