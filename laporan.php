@@ -2,6 +2,13 @@
 include 'cek_session.php';
 include 'koneksi.php';
 
+function getFontSize($angka) {
+    if ($angka >= 1000000000) return 'text-xs md:text-base';
+    elseif ($angka >= 100000000) return 'text-sm md:text-lg';
+    elseif ($angka >= 10000000) return 'text-base md:text-lg';
+    return 'text-lg md:text-lg';
+}
+
 $qProfit = mysqli_query($conn, "SELECT SUM(profit) as total FROM transactions");
 $dProfit = mysqli_fetch_assoc($qProfit);
 $totalProfit = $dProfit['total'] ?? 0;
@@ -50,16 +57,17 @@ $queryRecords = mysqli_query($conn, "SELECT * FROM financial_records $whereClaus
 
     <div class="flex h-screen overflow-hidden">
         
-        <aside id="sidebar" class="fixed inset-y-0 left-0 z-50 w-64 bg-white border-r border-gray-200 flex flex-col transition-transform duration-300 transform -translate-x-full md:translate-x-0 md:static md:flex">
-            <div class="h-16 flex items-center justify-between md:justify-center px-4 border-b border-gray-100 relative">
+        <aside id="sidebar" class="fixed inset-y-0 left-0 z-50 w-56 bg-white border-r border-gray-200 flex flex-col transition-transform duration-300 transform -translate-x-full md:translate-x-0 md:static md:flex">
+           <div class="h-16 flex items-center justify-between md:justify-center px-4 border-b border-gray-100 relative">
                 <div class="flex items-center gap-3">
-                    <img src="logo.png" alt="Logo" class="h-10 w-auto object-contain">
-                    <img src="namalogo.png" alt="Nama" class="h-8 w-auto object-contain">
+                    <img src="logo.png" alt="Logo Icon" class="h-12 w-auto object-contain">
+                    <img src="namalogo.png" alt="Nama Logo" class="h-5 w-auto object-contain">
                 </div>
                 <button onclick="toggleSidebar()" class="text-gray-500 md:hidden">
                     <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
                 </button>
             </div>
+            
             <nav class="flex-1 px-4 py-6 space-y-2">
                 <a href="index.php" class="flex items-center px-4 py-3 text-gray-600 hover:bg-gray-50 rounded-lg text-sm transition">Dashboard</a>
                 <a href="stok.php" class="flex items-center px-4 py-3 text-gray-600 hover:bg-gray-50 rounded-lg text-sm transition">Stok</a>
@@ -68,9 +76,7 @@ $queryRecords = mysqli_query($conn, "SELECT * FROM financial_records $whereClaus
                     Laporan Keuangan
                 </a>
             </nav>
-            <div class="p-4 border-t text-xs text-gray-400 text-center">
-                Project KP BSI &copy; 2026
-            </div>
+            <div class="p-4 border-t text-xs text-gray-400 text-center">SS Gold &copy; <?php echo date('Y'); ?></div>
         </aside>
 
         <main class="flex-1 overflow-y-auto p-4 md:p-8 relative">
@@ -89,74 +95,74 @@ $queryRecords = mysqli_query($conn, "SELECT * FROM financial_records $whereClaus
 
             <div class="grid grid-cols-2 lg:grid-cols-4 gap-3 md:gap-6 mb-8">
                 
-                <div class="bg-white p-4 md:p-6 rounded-xl shadow-sm border-t-4 border-blue-600 flex flex-col justify-between relative overflow-hidden transition-transform duration-300 hover:-translate-y-1 hover:shadow-lg group">
+                <div class="bg-white p-4 md:p-6 rounded-xl shadow-sm border-t-4 border-blue-700 flex flex-col justify-between relative overflow-hidden transition-transform duration-300 hover:-translate-y-1 hover:shadow-lg group cursor-pointer">
                     <div class="flex justify-between items-center mb-2">
-                        <div class="overflow-hidden">
-                            <p class="text-[10px] md:text-sm text-gray-500 font-semibold uppercase tracking-wider">Total Modal (Aset)</p>
-                            <h3 class="text-lg md:text-2xl font-bold text-gray-800 mt-1 truncate">
+                        <div>
+                            <p class="text-[10px] md:text-sm text-gray-500 font-semibold uppercase tracking-wider">Total Modal</p>
+                            <h3 class="<?php echo getFontSize($totalAsetBersih); ?> font-bold text-gray-800 mt-1 truncate">
                                 Rp <?php echo number_format($totalAsetBersih, 0, ',', '.'); ?>
                             </h3>
                         </div>
-                        <div class="p-2 rounded-lg bg-blue-100 text-blue-600 group-hover:scale-110 transition-transform">
-                            <svg class="w-4 h-4 md:w-6 md:h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"></path></svg>
+                        <div class="p-2 rounded-lg bg-gradient-to-br from-blue-600 to-blue-800 text-white shadow-md shadow-blue-200/50 group-hover:scale-110 transition-transform">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"></path></svg>
                         </div>
                     </div>
-                    <div class="flex items-center text-[10px] md:text-xs font-medium text-blue-600">
+                    <div class="flex items-center text-[10px] md:text-xs font-medium text-blue-800">
                         <span class="bg-blue-50 px-1.5 py-0.5 md:px-2 md:py-1 rounded-full whitespace-nowrap">Aset</span>
                     </div>
                 </div>
 
-                <div class="bg-white p-4 md:p-6 rounded-xl shadow-sm border-t-4 border-orange-500 flex flex-col justify-between relative overflow-hidden transition-transform duration-300 hover:-translate-y-1 hover:shadow-lg group">
+                <div class="bg-white p-4 md:p-6 rounded-xl shadow-sm border-t-4 border-orange-500 flex flex-col justify-between relative overflow-hidden transition-transform duration-300 hover:-translate-y-1 hover:shadow-lg group cursor-pointer">
                     <div class="flex justify-between items-center mb-2">
-                        <div class="overflow-hidden">
+                        <div>
                             <p class="text-[10px] md:text-sm text-gray-500 font-semibold uppercase tracking-wider">Total Prive</p>
-                            <h3 class="text-lg md:text-2xl font-bold text-gray-800 mt-1 truncate">
+                            <h3 class="<?php echo getFontSize($totalPrive); ?> font-bold text-gray-800 mt-1 truncate">
                                 Rp <?php echo number_format($totalPrive, 0, ',', '.'); ?>
                             </h3>
                         </div>
-                        <div class="p-2 rounded-lg bg-orange-100 text-orange-600 group-hover:scale-110 transition-transform">
-                            <svg class="w-4 h-4 md:w-6 md:h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 9V7a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2m2 4h10a2 2 0 002-2v-6a2 2 0 00-2-2H9a2 2 0 00-2 2v6a2 2 0 002 2zm7-5a2 2 0 11-4 0 2 2 0 014 0z"></path></svg>
+                        <div class="p-2 rounded-lg bg-gradient-to-br from-orange-400 to-amber-600 text-white shadow-md shadow-orange-200/50 group-hover:scale-110 transition-transform">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 9V7a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2m2 4h10a2 2 0 002-2v-6a2 2 0 00-2-2H9a2 2 0 00-2 2v6a2 2 0 002 2zm7-5a2 2 0 11-4 0 2 2 0 014 0z"></path></svg>
                         </div>
                     </div>
-                    <div class="flex items-center text-[10px] md:text-xs font-medium text-orange-600">
+                    <div class="flex items-center text-[10px] md:text-xs font-medium text-orange-700">
                         <span class="bg-orange-50 px-1.5 py-0.5 md:px-2 md:py-1 rounded-full whitespace-nowrap">Penarikan</span>
                     </div>
                 </div>
 
-                <div class="bg-white p-4 md:p-6 rounded-xl shadow-sm border-t-4 border-red-600 flex flex-col justify-between relative overflow-hidden transition-transform duration-300 hover:-translate-y-1 hover:shadow-lg group">
+                <div class="bg-white p-4 md:p-6 rounded-xl shadow-sm border-t-4 border-red-600 flex flex-col justify-between relative overflow-hidden transition-transform duration-300 hover:-translate-y-1 hover:shadow-lg group cursor-pointer">
                     <div class="flex justify-between items-center mb-2">
-                        <div class="overflow-hidden">
+                        <div>
                             <p class="text-[10px] md:text-sm text-gray-500 font-semibold uppercase tracking-wider">Total Hutang</p>
-                            <h3 class="text-lg md:text-2xl font-bold text-gray-800 mt-1 truncate">
+                            <h3 class="<?php echo getFontSize($totalHutang); ?> font-bold text-gray-800 mt-1 truncate">
                                 Rp <?php echo number_format($totalHutang, 0, ',', '.'); ?>
                             </h3>
                         </div>
-                        <div class="p-2 rounded-lg bg-red-100 text-red-600 group-hover:scale-110 transition-transform">
-                            <svg class="w-4 h-4 md:w-6 md:h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"></path></svg>
+                        <div class="p-2 rounded-lg bg-gradient-to-br from-red-400 to-pink-600 text-white shadow-md shadow-red-200/50 group-hover:scale-110 transition-transform">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"></path></svg>
                         </div>
                     </div>
-                    <div class="flex items-center text-[10px] md:text-xs font-medium text-red-600">
+                    <div class="flex items-center text-[10px] md:text-xs font-medium text-red-700">
                         <span class="bg-red-50 px-1.5 py-0.5 md:px-2 md:py-1 rounded-full whitespace-nowrap">Kewajiban</span>
                     </div>
                 </div>
 
-                <div class="bg-white p-4 md:p-6 rounded-xl shadow-sm border-t-4 border-teal-600 flex flex-col justify-between relative overflow-hidden transition-transform duration-300 hover:-translate-y-1 hover:shadow-lg group">
+                <div class="bg-white p-4 md:p-6 rounded-xl shadow-sm border-t-4 border-teal-600 flex flex-col justify-between relative overflow-hidden transition-transform duration-300 hover:-translate-y-1 hover:shadow-lg group cursor-pointer">
                     <div class="flex justify-between items-center mb-2">
-                        <div class="overflow-hidden">
+                        <div>
                             <p class="text-[10px] md:text-sm text-gray-500 font-semibold uppercase tracking-wider">Total Piutang</p>
-                            <h3 class="text-lg md:text-2xl font-bold text-gray-800 mt-1 truncate">
+                            <h3 class="<?php echo getFontSize($totalPiutang); ?> font-bold text-gray-800 mt-1 truncate">
                                 Rp <?php echo number_format($totalPiutang, 0, ',', '.'); ?>
                             </h3>
                         </div>
-                        <div class="p-2 rounded-lg bg-teal-100 text-teal-600 group-hover:scale-110 transition-transform">
-                            <svg class="w-4 h-4 md:w-6 md:h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 10l7-7m0 0l7 7m-7-7v18"></path></svg>
+                        <div class="p-2 rounded-lg bg-gradient-to-br from-teal-500 to-emerald-700 text-white shadow-md shadow-teal-200/50 group-hover:scale-110 transition-transform">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 10l7-7m0 0l7 7m-7-7v18"></path></svg>
                         </div>
                     </div>
-                    <div class="flex items-center text-[10px] md:text-xs font-medium text-teal-600">
+                    <div class="flex items-center text-[10px] md:text-xs font-medium text-teal-700">
                         <span class="bg-teal-50 px-1.5 py-0.5 md:px-2 md:py-1 rounded-full whitespace-nowrap">Hak Tagih</span>
                     </div>
                 </div>
-            </div>
+            </div>                
 
             <div class="mb-8 flex justify-end">
                 <button onclick="bukaModalKeuangan()" class="bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-2.5 px-6 rounded-lg shadow-sm shadow-emerald-200 transition flex items-center gap-2 text-sm w-full md:w-auto justify-center">

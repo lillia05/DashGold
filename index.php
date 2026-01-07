@@ -15,8 +15,8 @@ function format_singkat($angka) {
 function getFontSize($angka) {
     if ($angka >= 1000000000) return 'text-xs md:text-base';
     elseif ($angka >= 100000000) return 'text-sm md:text-lg';
-    elseif ($angka >= 10000000) return 'text-base md:text-xl';
-    return 'text-lg md:text-2xl';
+    elseif ($angka >= 10000000) return 'text-base md:text-lg';
+    return 'text-lg md:text-lg';
 }
 
 $queryToday = mysqli_query($conn, "SELECT SUM(profit) as total FROM transactions WHERE DATE(tanggal_jual) = '$hariIni'");
@@ -199,7 +199,7 @@ $bulan_tahun_indo = "$bulan_indo $tahun_angka";
                     <div class="flex justify-between items-center mb-2">
                         <div>
                             <p class="text-[10px] md:text-sm text-gray-500 font-semibold uppercase tracking-wider">Stok Gudang</p>
-                            <h3 class="text-lg md:text-2xl font-bold text-gray-800 mt-1 truncate"><?php echo $stockGudang; ?> <span class="text-xs md:text-lg font-normal text-gray-500">gr</span></h3>
+                            <h3 class="text-lg md:text-lg font-bold text-gray-800 mt-1 truncate"><?php echo $stockGudang; ?> <span class="text-xs md:text-lg font-normal text-gray-500">gr</span></h3>
                         </div>
                         <div class="p-2 rounded-lg bg-gradient-to-br from-orange-400 to-amber-600 text-white shadow-md shadow-orange-200/50 group-hover:scale-110 transition-transform">
                             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"></path></svg>
