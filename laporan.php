@@ -374,7 +374,6 @@ $queryRecords = mysqli_query($conn, "SELECT * FROM financial_records $whereClaus
             overlay.classList.toggle('hidden');
         }
 
-        // --- FUNGSI FORMAT RUPIAH ---
         function formatRupiah(element) {
             let value = element.value.replace(/[^,\d]/g, ''); 
             let split = value.split(',');
@@ -390,7 +389,6 @@ $queryRecords = mysqli_query($conn, "SELECT * FROM financial_records $whereClaus
             rupiah = split[1] != undefined ? rupiah + ',' + split[1] : rupiah;
             element.value = rupiah;
 
-            // Simpan ke hidden input yang sesuai
             if (element.id === 'tambahJumlahDisplay') {
                 document.getElementById('tambahJumlahReal').value = rupiah.replace(/\./g, '');
             } else if (element.id === 'editJumlahDisplay') {
@@ -398,7 +396,6 @@ $queryRecords = mysqli_query($conn, "SELECT * FROM financial_records $whereClaus
             }
         }
 
-        // --- PREPARE SUBMIT ---
         function prepareSubmitTambah() {
             let displayVal = document.getElementById('tambahJumlahDisplay').value;
             document.getElementById('tambahJumlahReal').value = displayVal.replace(/\./g, '');
@@ -409,7 +406,6 @@ $queryRecords = mysqli_query($conn, "SELECT * FROM financial_records $whereClaus
             document.getElementById('editJumlahReal').value = displayVal.replace(/\./g, '');
         }
 
-        // Modal Functions
         function bukaModalKeuangan() {
             document.getElementById('modalKeuangan').classList.remove('hidden');
         }
@@ -422,7 +418,6 @@ $queryRecords = mysqli_query($conn, "SELECT * FROM financial_records $whereClaus
             document.getElementById('editNama').value = nama;
             document.getElementById('editKategori').value = kategori;
             
-            // Format jumlah untuk tampilan edit
             let formattedJumlah = new Intl.NumberFormat('id-ID').format(jumlah);
             document.getElementById('editJumlahDisplay').value = formattedJumlah;
             document.getElementById('editJumlahReal').value = jumlah;
