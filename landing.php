@@ -177,7 +177,6 @@ if(isset($_POST['pin_kode'])){
             statusMsg.className = "h-4 mt-6 text-center text-[10px] font-bold text-amber-600 tracking-[0.2em]";
 
             setTimeout(() => {
-                // Masukkan PIN ke form hidden dan submit ke PHP
                 document.getElementById('pinHidden').value = pinValue;
                 document.getElementById('formLogin').submit();
             }, 300);

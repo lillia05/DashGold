@@ -2,12 +2,10 @@
 include 'cek_session.php';
 include 'koneksi.php';
 
-// 1. HITUNG TOTAL PROFIT (DARI TABEL TRANSAKSI)
 $qProfit = mysqli_query($conn, "SELECT SUM(profit) as total FROM transactions");
 $dProfit = mysqli_fetch_assoc($qProfit);
 $totalProfit = $dProfit['total'] ?? 0;
 
-// 2. HITUNG REKAP KEUANGAN (DARI TABEL FINANCIAL_RECORDS)
 $qFinance = mysqli_query($conn, "SELECT 
     SUM(CASE WHEN kategori = 'modal' THEN jumlah ELSE 0 END) as total_modal_manual,
     SUM(CASE WHEN kategori = 'prive' THEN jumlah ELSE 0 END) as total_prive,
@@ -21,17 +19,14 @@ $totalPrive = $dFinance['total_prive'] ?? 0;
 $totalHutang = $dFinance['total_hutang'] ?? 0;
 $totalPiutang = $dFinance['total_piutang'] ?? 0;
 
-// 3. RUMUS CARD TOTAL MODAL (ASET BERSIH)
 $totalAsetBersih = ($modalManual + $totalProfit + $totalHutang) - ($totalPrive + $totalPiutang);
 
-// 4. FILTER KATEGORI UNTUK TABEL
 $whereClause = "";
 if (isset($_GET['kategori']) && !empty($_GET['kategori']) && $_GET['kategori'] != 'semua') {
     $kategori = mysqli_real_escape_string($conn, $_GET['kategori']);
     $whereClause = "WHERE kategori = '$kategori'";
 }
 
-// 5. QUERY DATA TABEL
 $queryRecords = mysqli_query($conn, "SELECT * FROM financial_records $whereClause ORDER BY tanggal DESC, created_at DESC");
 ?>
 

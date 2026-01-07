@@ -49,7 +49,7 @@ $queryTopBuyers = mysqli_query($conn, "SELECT t.nama_pembeli,
 $queryRecent = mysqli_query($conn, "SELECT t.*, s.nama_barang, s.supplier, s.berat 
                                     FROM transactions t 
                                     JOIN stocks s ON t.stock_id = s.id 
-                                    ORDER BY t.profit DESC 
+                                    ORDER BY t.tanggal_jual DESC, t.id DESC 
                                     LIMIT 5");
 
 $array_hari = ['Sunday'=>'Minggu', 'Monday'=>'Senin', 'Tuesday'=>'Selasa', 'Wednesday'=>'Rabu', 'Thursday'=>'Kamis', 'Friday'=>'Jumat', 'Saturday'=>'Sabtu'];
