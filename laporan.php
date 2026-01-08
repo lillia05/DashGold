@@ -15,18 +15,24 @@ $totalProfit = $dProfit['total'] ?? 0;
 
 $qFinance = mysqli_query($conn, "SELECT 
     SUM(CASE WHEN kategori = 'modal' THEN jumlah ELSE 0 END) as total_modal_manual,
+    SUM(CASE WHEN kategori = 'modal internal' THEN jumlah ELSE 0 END) as total_modal_int,
+    SUM(CASE WHEN kategori = 'modal eksternal' THEN jumlah ELSE 0 END) as total_modal_ext,
     SUM(CASE WHEN kategori = 'prive' THEN jumlah ELSE 0 END) as total_prive,
-    SUM(CASE WHEN kategori = 'hutang' THEN jumlah ELSE 0 END) as total_hutang,
+    SUM(CASE WHEN kategori = 'cicilan' THEN jumlah ELSE 0 END) as total_cicilan,
     SUM(CASE WHEN kategori = 'piutang' THEN jumlah ELSE 0 END) as total_piutang
     FROM financial_records");
 $dFinance = mysqli_fetch_assoc($qFinance);
 
 $modalManual = $dFinance['total_modal_manual'] ?? 0;
+$modalInternal = $dFinance['total_modal_int'] ?? 0;
+$modalEksternal = $dFinance['total_modal_ext'] ?? 0;
 $totalPrive = $dFinance['total_prive'] ?? 0;
-$totalHutang = $dFinance['total_hutang'] ?? 0;
+$totalcicilan = $dFinance['total_cicilan'] ?? 0;
 $totalPiutang = $dFinance['total_piutang'] ?? 0;
 
-$totalAsetBersih = ($modalManual + $totalProfit + $totalHutang) - ($totalPrive + $totalPiutang);
+// $totalAsetBersih = ($modalManual + $modalInternal + $modalEksternal + $totalProfit + $totalcicilan) - ($totalPrive + $totalPiutang);
+$totalAsetBersih = ($modalManual + $modalInternal + $modalEksternal + $totalProfit ) - ($totalPrive + $totalcicilan + $totalPiutang);
+
 
 $whereClause = "";
 if (isset($_GET['kategori']) && !empty($_GET['kategori']) && $_GET['kategori'] != 'semua') {
@@ -88,7 +94,7 @@ $queryRecords = mysqli_query($conn, "SELECT * FROM financial_records $whereClaus
                     </button>
                     <div>
                         <h2 class="text-2xl font-bold text-gray-900">Laporan Keuangan</h2>
-                        <p class="text-sm text-gray-500 mt-1">Kelola Modal, Prive, Hutang, dan Piutang Usaha Anda.</p>
+                        <p class="text-sm text-gray-500 mt-1">Kelola Modal, Prive, Cicilan, dan Piutang Usaha Anda.</p>
                     </div>
                 </div>
             </header>
@@ -132,9 +138,9 @@ $queryRecords = mysqli_query($conn, "SELECT * FROM financial_records $whereClaus
                 <div class="bg-white p-4 md:p-6 rounded-xl shadow-sm border-t-4 border-red-600 flex flex-col justify-between relative overflow-hidden transition-transform duration-300 hover:-translate-y-1 hover:shadow-lg group cursor-pointer">
                     <div class="flex justify-between items-center mb-2">
                         <div>
-                            <p class="text-[10px] md:text-sm text-gray-500 font-semibold uppercase tracking-wider">Total Hutang</p>
-                            <h3 class="<?php echo getFontSize($totalHutang); ?> font-bold text-gray-800 mt-1 truncate">
-                                Rp <?php echo number_format($totalHutang, 0, ',', '.'); ?>
+                            <p class="text-[10px] md:text-sm text-gray-500 font-semibold uppercase tracking-wider">Total Cicilan</p>
+                            <h3 class="<?php echo getFontSize($totalcicilan); ?> font-bold text-gray-800 mt-1 truncate">
+                                Rp <?php echo number_format($totalcicilan, 0, ',', '.'); ?>
                             </h3>
                         </div>
                         <div class="p-2 rounded-lg bg-gradient-to-br from-red-400 to-pink-600 text-white shadow-md shadow-red-200/50 group-hover:scale-110 transition-transform">
@@ -164,6 +170,37 @@ $queryRecords = mysqli_query($conn, "SELECT * FROM financial_records $whereClaus
                 </div>
             </div>                
 
+            <div class="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden mb-8">
+                <div class="px-6 py-4 border-b border-gray-100 flex justify-between items-center bg-blue-50">
+                    <div class="flex items-center gap-2">
+                        <div class="p-1.5 bg-blue-100 rounded-md text-blue-600">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                        </div>
+                        <h3 class="font-bold text-gray-900 text-sm">Rincian Modal</h3>
+                    </div>
+                </div>
+                <div class="overflow-x-auto">
+                    <table class="w-full text-left whitespace-nowrap text-sm">
+                        <thead class="bg-white text-gray-500 uppercase text-[10px] border-b border-gray-100">
+                            <tr>
+                                <th class="px-6 py-3 font-semibold w-1/2">Total Modal Internal</th>
+                                <th class="px-6 py-3 font-semibold w-1/2 text-right">Total Modal Eksternal</th>
+                            </tr>
+                        </thead>
+                        <tbody class="divide-y divide-gray-50">
+                            <tr class="hover:bg-blue-50/30 transition-colors">
+                                <td class="px-6 py-4 font-bold text-blue-700 text-lg">
+                                    Rp <?php echo number_format($modalInternal, 0, ',', '.'); ?>
+                                </td>
+                                <td class="px-6 py-4 font-bold text-indigo-700 text-lg text-right">
+                                    Rp <?php echo number_format($modalEksternal, 0, ',', '.'); ?>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
             <div class="mb-8 flex justify-end">
                 <button onclick="bukaModalKeuangan()" class="bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-2.5 px-6 rounded-lg shadow-sm shadow-emerald-200 transition flex items-center gap-2 text-sm w-full md:w-auto justify-center">
                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path></svg>
@@ -179,9 +216,10 @@ $queryRecords = mysqli_query($conn, "SELECT * FROM financial_records $whereClaus
                     <form method="GET" class="relative">
                         <select name="kategori" onchange="this.form.submit()" class="pl-3 pr-8 py-2 text-xs border border-gray-300 rounded-lg bg-white focus:outline-none focus:ring-2 focus:ring-emerald-500 cursor-pointer shadow-sm">
                             <option value="semua" <?= (!isset($_GET['kategori']) || $_GET['kategori'] == 'semua') ? 'selected' : '' ?>>Semua Kategori</option>
-                            <option value="modal" <?= (isset($_GET['kategori']) && $_GET['kategori'] == 'modal') ? 'selected' : '' ?>>Modal</option>
+                            <option value="modal internal" <?= (isset($_GET['kategori']) && $_GET['kategori'] == 'modal internal') ? 'selected' : '' ?>>Modal Internal</option>
+                            <option value="modal eksternal" <?= (isset($_GET['kategori']) && $_GET['kategori'] == 'modal eksternal') ? 'selected' : '' ?>>Modal Eksternal</option>
                             <option value="prive" <?= (isset($_GET['kategori']) && $_GET['kategori'] == 'prive') ? 'selected' : '' ?>>Prive</option>
-                            <option value="hutang" <?= (isset($_GET['kategori']) && $_GET['kategori'] == 'hutang') ? 'selected' : '' ?>>Hutang</option>
+                            <option value="cicilan" <?= (isset($_GET['kategori']) && $_GET['kategori'] == 'cicilan') ? 'selected' : '' ?>>Cicilan</option>
                             <option value="piutang" <?= (isset($_GET['kategori']) && $_GET['kategori'] == 'piutang') ? 'selected' : '' ?>>Piutang</option>
                         </select>
                     </form>
@@ -204,11 +242,12 @@ $queryRecords = mysqli_query($conn, "SELECT * FROM financial_records $whereClaus
                             <?php 
                             $no = 1;
                             while($row = mysqli_fetch_assoc($queryRecords)) { 
-                                // Warna badge kategori
                                 $badgeColor = "bg-gray-100 text-gray-700 border-gray-200";
-                                if ($row['kategori'] == 'modal') $badgeColor = "bg-blue-100 text-blue-700 border-blue-200";
+                                if ($row['kategori'] == 'modal') $badgeColor = "bg-purple-100 text-purple-700 border-purple-200";
+                                if ($row['kategori'] == 'modal internal') $badgeColor = "bg-purple-100 text-purple-700 border-purple-200";
+                                if ($row['kategori'] == 'modal eksternal') $badgeColor = "bg-blue-100 text-blue-700 border-blue-200";
                                 else if ($row['kategori'] == 'prive') $badgeColor = "bg-orange-100 text-orange-700 border-orange-200";
-                                else if ($row['kategori'] == 'hutang') $badgeColor = "bg-red-100 text-red-700 border-red-200";
+                                else if ($row['kategori'] == 'cicilan') $badgeColor = "bg-red-100 text-red-700 border-red-200";
                                 else if ($row['kategori'] == 'piutang') $badgeColor = "bg-teal-100 text-teal-700 border-teal-200";
                             ?>
                             <tr class="hover:bg-gray-50/50 transition">
@@ -265,9 +304,10 @@ $queryRecords = mysqli_query($conn, "SELECT * FROM financial_records $whereClaus
                             <div>
                                 <label class="block text-sm font-medium text-gray-700 mb-2">Jenis Transaksi</label>
                                 <select name="kategori" class="w-full border border-gray-300 rounded-lg p-2.5 text-sm bg-white focus:ring-2 focus:ring-emerald-500 outline-none">
-                                    <option value="modal">Modal</option>
+                                    <option value="modal internal">Modal Internal</option>
+                                    <option value="modal eksternal">Modal Eksternal</option>
                                     <option value="prive">Prive</option>
-                                    <option value="hutang">Hutang</option>
+                                    <option value="cicilan">Cicilan</option>
                                     <option value="piutang">Piutang</option>
                                 </select>
                             </div>
@@ -319,8 +359,10 @@ $queryRecords = mysqli_query($conn, "SELECT * FROM financial_records $whereClaus
                                 <label class="block text-sm font-medium text-gray-700 mb-2">Jenis Transaksi</label>
                                 <select name="kategori" id="editKategori" class="w-full border border-gray-300 rounded-lg p-2.5 text-sm bg-white focus:ring-2 focus:ring-amber-500 outline-none">
                                     <option value="modal">Modal</option>
+                                    <option value="modal internal">Modal Internal</option>
+                                    <option value="modal eksternal">Modal Eksternal</option>
                                     <option value="prive">Prive</option>
-                                    <option value="hutang">Hutang</option>
+                                    <option value="cicilan">Cicilan</option>
                                     <option value="piutang">Piutang</option>
                                 </select>
                             </div>
