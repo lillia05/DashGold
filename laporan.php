@@ -13,6 +13,10 @@ $qProfit = mysqli_query($conn, "SELECT SUM(profit) as total FROM transactions");
 $dProfit = mysqli_fetch_assoc($qProfit);
 $totalProfit = $dProfit['total'] ?? 0;
 
+$qStok = mysqli_query($conn, "SELECT SUM(harga_beli_total) as total_aset_stok FROM stocks WHERE status = 'available'");
+$dStok = mysqli_fetch_assoc($qStok);
+$totalAsetStok = $dStok['total_aset_stok'] ?? 0;
+
 $qFinance = mysqli_query($conn, "SELECT 
     SUM(CASE WHEN kategori = 'modal' THEN jumlah ELSE 0 END) as total_modal_manual,
     SUM(CASE WHEN kategori = 'modal internal' THEN jumlah ELSE 0 END) as total_modal_int,
@@ -31,8 +35,8 @@ $totalcicilan = $dFinance['total_cicilan'] ?? 0;
 $totalPiutang = $dFinance['total_piutang'] ?? 0;
 
 // $totalAsetBersih = ($modalManual + $modalInternal + $modalEksternal + $totalProfit + $totalcicilan) - ($totalPrive + $totalPiutang);
-$totalAsetBersih = ($modalManual + $modalInternal + $modalEksternal + $totalProfit ) - ($totalPrive + $totalcicilan + $totalPiutang);
-
+// $totalAsetBersih = ($modalManual + $modalInternal + $modalEksternal + $totalProfit + $totalAsetStok) - ($totalPrive + $totalcicilan + $totalPiutang);
+$totalAsetBersih = ($modalManual + $modalInternal + $modalEksternal + $totalProfit) - ($totalPrive + $totalcicilan + $totalPiutang);
 
 $whereClause = "";
 if (isset($_GET['kategori']) && !empty($_GET['kategori']) && $_GET['kategori'] != 'semua') {
@@ -176,15 +180,16 @@ $queryRecords = mysqli_query($conn, "SELECT * FROM financial_records $whereClaus
                         <div class="p-1.5 bg-blue-100 rounded-md text-blue-600">
                             <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
                         </div>
-                        <h3 class="font-bold text-gray-900 text-sm">Rincian Modal</h3>
+                        <h3 class="font-bold text-gray-900 text-sm">Rincian</h3>
                     </div>
                 </div>
                 <div class="overflow-x-auto">
                     <table class="w-full text-left whitespace-nowrap text-sm">
-                        <thead class="bg-white text-gray-500 uppercase text-[10px] border-b border-gray-100">
+                        <thead class="bg-white text-gray-700 uppercase text-[10px] border-b border-gray-100">
                             <tr>
-                                <th class="px-6 py-3 font-semibold w-1/2">Total Modal Internal</th>
-                                <th class="px-6 py-3 font-semibold w-1/2 text-right">Total Modal Eksternal</th>
+                                <th class="px-6 py-3 font-bold w-1/2">Total Modal Internal</th>
+                                <th class="px-6 py-3 font-bold w-1/2">Total Modal Eksternal</th>
+                                <th class="px-6 py-3 font-bold w-1/2">Total Aset Barang</th>
                             </tr>
                         </thead>
                         <tbody class="divide-y divide-gray-50">
@@ -192,8 +197,11 @@ $queryRecords = mysqli_query($conn, "SELECT * FROM financial_records $whereClaus
                                 <td class="px-6 py-4 font-bold text-blue-700 text-lg">
                                     Rp <?php echo number_format($modalInternal, 0, ',', '.'); ?>
                                 </td>
-                                <td class="px-6 py-4 font-bold text-indigo-700 text-lg text-right">
+                                <td class="px-6 py-4 font-bold text-indigo-700 text-lg">
                                     Rp <?php echo number_format($modalEksternal, 0, ',', '.'); ?>
+                                </td>
+                                <td class="px-6 py-4 font-bold text-emerald-600 text-lg">
+                                    Rp <?php echo number_format($totalAsetStok, 0, ',', '.'); ?>
                                 </td>
                             </tr>
                         </tbody>
