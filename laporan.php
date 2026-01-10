@@ -36,7 +36,7 @@ $totalPiutang = $dFinance['total_piutang'] ?? 0;
 
 // $totalAsetBersih = ($modalManual + $modalInternal + $modalEksternal + $totalProfit + $totalcicilan) - ($totalPrive + $totalPiutang);
 // $totalAsetBersih = ($modalManual + $modalInternal + $modalEksternal + $totalProfit + $totalAsetStok) - ($totalPrive + $totalcicilan + $totalPiutang);
-$totalAsetBersih = ($modalManual + $modalInternal + $modalEksternal + $totalProfit) - ($totalPrive + $totalcicilan + $totalPiutang);
+$totalAsetBersih = ($modalManual + $modalInternal + $modalEksternal + $totalProfit + $totalAsetStok) - ($totalPrive + $totalcicilan + $totalPiutang);
 
 $whereClause = "";
 if (isset($_GET['kategori']) && !empty($_GET['kategori']) && $_GET['kategori'] != 'semua') {
