@@ -9,16 +9,15 @@ function getFontSize($angka) {
     return 'text-lg md:text-lg';
 }
 
-$qProfit = mysqli_query($conn, "SELECT SUM(profit) as total FROM transactions");
-$dProfit = mysqli_fetch_assoc($qProfit);
-$totalProfit = $dProfit['total'] ?? 0;
+$qTrans = mysqli_query($conn, "SELECT SUM(harga_jual_total) as total_omset FROM transactions");
+$dTrans = mysqli_fetch_assoc($qTrans);
+$totalOmset = $dTrans['total_omset'] ?? 0;
 
 $qStok = mysqli_query($conn, "SELECT SUM(harga_beli_total) as total_aset_stok FROM stocks WHERE status = 'available'");
 $dStok = mysqli_fetch_assoc($qStok);
 $totalAsetStok = $dStok['total_aset_stok'] ?? 0;
 
 $qFinance = mysqli_query($conn, "SELECT 
-    SUM(CASE WHEN kategori = 'modal' THEN jumlah ELSE 0 END) as total_modal_manual,
     SUM(CASE WHEN kategori = 'modal internal' THEN jumlah ELSE 0 END) as total_modal_int,
     SUM(CASE WHEN kategori = 'modal eksternal' THEN jumlah ELSE 0 END) as total_modal_ext,
     SUM(CASE WHEN kategori = 'prive' THEN jumlah ELSE 0 END) as total_prive,
@@ -27,16 +26,18 @@ $qFinance = mysqli_query($conn, "SELECT
     FROM financial_records");
 $dFinance = mysqli_fetch_assoc($qFinance);
 
-$modalManual = $dFinance['total_modal_manual'] ?? 0;
 $modalInternal = $dFinance['total_modal_int'] ?? 0;
 $modalEksternal = $dFinance['total_modal_ext'] ?? 0;
 $totalPrive = $dFinance['total_prive'] ?? 0;
-$totalcicilan = $dFinance['total_cicilan'] ?? 0;
+$totalCicilan = $dFinance['total_cicilan'] ?? 0;
 $totalPiutang = $dFinance['total_piutang'] ?? 0;
 
+$profitBersih = $totalOmset - ($totalPrive + $totalCicilan + $totalPiutang);
+$totalAsetBersih = $modalInternal + $modalEksternal + $totalAsetStok + $profitBersih;
+
+// $totalAsetBersih = ($modalInternal + $modalEksternal + $totalAsetStok + $totalOmset) - ($totalPrive + $totalCicilan + $totalPiutang);
 // $totalAsetBersih = ($modalManual + $modalInternal + $modalEksternal + $totalProfit + $totalcicilan) - ($totalPrive + $totalPiutang);
 // $totalAsetBersih = ($modalManual + $modalInternal + $modalEksternal + $totalProfit + $totalAsetStok) - ($totalPrive + $totalcicilan + $totalPiutang);
-$totalAsetBersih = ($modalManual + $modalInternal + $modalEksternal + $totalProfit + $totalAsetStok) - ($totalPrive + $totalcicilan + $totalPiutang);
 
 $whereClause = "";
 if (isset($_GET['kategori']) && !empty($_GET['kategori']) && $_GET['kategori'] != 'semua') {
@@ -143,8 +144,8 @@ $queryRecords = mysqli_query($conn, "SELECT * FROM financial_records $whereClaus
                     <div class="flex justify-between items-center mb-2">
                         <div>
                             <p class="text-[10px] md:text-sm text-gray-500 font-semibold uppercase tracking-wider">Total Cicilan</p>
-                            <h3 class="<?php echo getFontSize($totalcicilan); ?> font-bold text-gray-800 mt-1 truncate">
-                                Rp <?php echo number_format($totalcicilan, 0, ',', '.'); ?>
+                            <h3 class="<?php echo getFontSize($totalCicilan); ?> font-bold text-gray-800 mt-1 truncate">
+                                Rp <?php echo number_format($totalCicilan, 0, ',', '.'); ?>
                             </h3>
                         </div>
                         <div class="p-2 rounded-lg bg-gradient-to-br from-red-400 to-pink-600 text-white shadow-md shadow-red-200/50 group-hover:scale-110 transition-transform">

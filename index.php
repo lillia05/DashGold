@@ -18,18 +18,29 @@ function getFontSize($angka) {
     elseif ($angka >= 10000000) return 'text-base md:text-lg';
     return 'text-lg md:text-lg';
 }
+$qProfitToday = mysqli_query($conn, "SELECT SUM(profit) as total FROM transactions WHERE DATE(tanggal_jual) = '$hariIni'");
+$profitKotorToday = mysqli_fetch_assoc($qProfitToday)['total'] ?? 0;
 
-$queryToday = mysqli_query($conn, "SELECT SUM(profit) as total FROM transactions WHERE DATE(tanggal_jual) = '$hariIni'");
-$rowToday = mysqli_fetch_assoc($queryToday);
-$profitToday = $rowToday['total'] ?? 0;
+$qProfitWeek = mysqli_query($conn, "SELECT SUM(profit) as total FROM transactions WHERE YEARWEEK(tanggal_jual, 1) = YEARWEEK('$hariIni', 1)");
+$profitKotorWeek = mysqli_fetch_assoc($qProfitWeek)['total'] ?? 0;
 
-$queryWeek = mysqli_query($conn, "SELECT SUM(profit) as total FROM transactions WHERE YEARWEEK(tanggal_jual, 1) = YEARWEEK('$hariIni', 1)");
-$rowWeek = mysqli_fetch_assoc($queryWeek);
-$profitWeek = $rowWeek['total'] ?? 0;
+$qProfitMonth = mysqli_query($conn, "SELECT SUM(profit) as total FROM transactions WHERE MONTH(tanggal_jual) = MONTH('$hariIni') AND YEAR(tanggal_jual) = YEAR('$hariIni')");
+$profitKotorMonth = mysqli_fetch_assoc($qProfitMonth)['total'] ?? 0;
 
-$queryMonth = mysqli_query($conn, "SELECT SUM(profit) as total FROM transactions WHERE MONTH(tanggal_jual) = MONTH('$hariIni') AND YEAR(tanggal_jual) = YEAR('$hariIni')");
-$rowMonth = mysqli_fetch_assoc($queryMonth);
-$profitMonth = $rowMonth['total'] ?? 0;
+
+$qBebanToday = mysqli_query($conn, "SELECT SUM(jumlah) as total FROM financial_records WHERE (kategori='prive' OR kategori='piutang' OR kategori='cicilan') AND tanggal = '$hariIni'");
+$bebanToday = mysqli_fetch_assoc($qBebanToday)['total'] ?? 0;
+
+$qBebanWeek = mysqli_query($conn, "SELECT SUM(jumlah) as total FROM financial_records WHERE (kategori='prive' OR kategori='piutang' OR kategori='cicilan') AND YEARWEEK(tanggal, 1) = YEARWEEK('$hariIni', 1)");
+$bebanWeek = mysqli_fetch_assoc($qBebanWeek)['total'] ?? 0;
+
+$qBebanMonth = mysqli_query($conn, "SELECT SUM(jumlah) as total FROM financial_records WHERE (kategori='prive' OR kategori='piutang' OR kategori='cicilan') AND MONTH(tanggal) = MONTH('$hariIni') AND YEAR(tanggal) = YEAR('$hariIni')");
+$bebanMonth = mysqli_fetch_assoc($qBebanMonth)['total'] ?? 0;
+
+
+$profitToday = $profitKotorToday - $bebanToday;
+$profitWeek  = $profitKotorWeek - $bebanWeek;
+$profitMonth = $profitKotorMonth - $bebanMonth;
 
 $queryStock = mysqli_query($conn, "SELECT SUM(berat) as total_berat FROM stocks WHERE status = 'available'");
 $rowStock = mysqli_fetch_assoc($queryStock);
