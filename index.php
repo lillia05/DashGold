@@ -38,13 +38,24 @@ $qBebanMonth = mysqli_query($conn, "SELECT SUM(jumlah) as total FROM financial_r
 $bebanMonth = mysqli_fetch_assoc($qBebanMonth)['total'] ?? 0;
 
 
-$profitToday = $profitKotorToday - $bebanToday;
-$profitWeek  = $profitKotorWeek - $bebanWeek;
-$profitMonth = $profitKotorMonth - $bebanMonth;
+$profitToday = $profitKotorToday;
+$profitWeek  = $profitKotorWeek;
+$profitMonth = $profitKotorMonth; 
 
 $queryStock = mysqli_query($conn, "SELECT SUM(berat) as total_berat FROM stocks WHERE status = 'available'");
 $rowStock = mysqli_fetch_assoc($queryStock);
 $stockGudang = $rowStock['total_berat'] ?? 0;
+
+$queryTopSuppliers = mysqli_query($conn, "SELECT TRIM(supplier) as nama_reseller, 
+                                                 COUNT(id) as total_items,
+                                                 SUM(berat) as total_berat
+                                          FROM stocks
+                                          WHERE status = 'sold' 
+                                          AND MONTH(tanggal_beli) = MONTH('$hariIni') 
+                                          AND YEAR(tanggal_beli) = YEAR('$hariIni')
+                                          GROUP BY nama_reseller 
+                                          ORDER BY total_berat DESC 
+                                          LIMIT 3");
 
 $queryTopBuyers = mysqli_query($conn, "SELECT t.nama_pembeli, 
                                               SUM(t.profit) as total_profit,
@@ -269,6 +280,55 @@ $bulan_tahun_indo = "$bulan_indo $tahun_angka";
                     </div>
                 </div>
             </div>
+
+
+            <div class="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden mb-8">
+                        <div class="px-6 py-4 border-b border-gray-100 flex justify-between items-center bg-purple-50">
+                            <div class="flex items-center gap-2">
+                                <div class="p-1.5 bg-purple-100 rounded-md text-purple-600">
+                                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"></path></svg>
+                                </div>
+                                <h3 class="font-bold text-gray-900 text-sm">Top Reseller Bulan Ini</h3>
+                            </div>
+                            <span class="text-xs font-medium text-purple-600"><?php echo $bulan_tahun_indo; ?></span>
+                        </div>
+                        <div class="overflow-x-auto">
+                            <table class="w-full text-left whitespace-nowrap text-sm">
+                                <thead class="bg-white text-gray-500 uppercase text-[10px] border-b border-gray-100">
+                                    <tr>
+                                        <th class="px-6 py-3 font-semibold">No</th>
+                                        <th class="px-6 py-3 font-semibold">Nama Supplier</th>
+                                        <th class="px-6 py-3 font-semibold text-center">Jml Transaksi</th>
+                                        <th class="px-6 py-3 font-semibold text-right text-purple-600">Total (Gr)</th>
+                                    </tr>
+                                </thead>
+                                <tbody class="divide-y divide-gray-50">
+                                    <?php 
+                                    $noSupp = 1;
+                                    if(mysqli_num_rows($queryTopSuppliers) > 0) {
+                                        while($rowSupp = mysqli_fetch_assoc($queryTopSuppliers)) { 
+                                    ?>
+                                    <tr class="hover:bg-purple-50/30 transition-colors">
+                                        <td class="px-6 py-3 text-gray-400 font-medium"><?= $noSupp++; ?></td>
+                                        <td class="px-6 py-3 font-bold text-gray-800"><?= $rowSupp['nama_reseller']; ?></td>
+                                        <td class="px-6 py-3 text-center font-medium text-gray-700 bg-gray-50/50">
+                                            <?= $rowSupp['total_items']; ?>
+                                        </td>
+                                        <td class="px-6 py-3 text-right font-bold text-purple-600"><?= number_format($rowSupp['total_berat'], 2, ',', '.'); ?> gr</td>
+                                    </tr>
+                                    <?php 
+                                        } 
+                                    } else {
+                                        echo '<tr><td colspan="4" class="px-6 py-6 text-center text-gray-400 italic text-xs">Belum ada data supplier bulan ini.</td></tr>';
+                                    }
+                                    ?>
+                                </tbody>
+                            </table>
+                        </div>
+                    
+
+            </div>
+
 
             <div class="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden mb-8">
                 <div class="px-6 py-4 border-b border-gray-100 flex justify-between items-center bg-pink-50">
