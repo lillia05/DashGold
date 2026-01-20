@@ -27,13 +27,13 @@ $profitKotorWeek = mysqli_fetch_assoc($qProfitWeek)['total'] ?? 0;
 $qProfitMonth = mysqli_query($conn, "SELECT SUM(profit) as total FROM transactions WHERE MONTH(tanggal_jual) = MONTH('$hariIni') AND YEAR(tanggal_jual) = YEAR('$hariIni')");
 $profitKotorMonth = mysqli_fetch_assoc($qProfitMonth)['total'] ?? 0;
 
-$qBebanToday = mysqli_query($conn, "SELECT SUM(jumlah) as total FROM financial_records WHERE (kategori='prive' OR kategori='piutang' OR kategori='cicilan') AND tanggal = '$hariIni'");
+$qBebanToday = mysqli_query($conn, "SELECT SUM(jumlah) as total FROM financial_records WHERE (kategori='prive') AND tanggal = '$hariIni'");
 $bebanToday = mysqli_fetch_assoc($qBebanToday)['total'] ?? 0;
 
-$qBebanWeek = mysqli_query($conn, "SELECT SUM(jumlah) as total FROM financial_records WHERE (kategori='prive' OR kategori='piutang' OR kategori='cicilan') AND YEARWEEK(tanggal, 1) = YEARWEEK('$hariIni', 1)");
+$qBebanWeek = mysqli_query($conn, "SELECT SUM(jumlah) as total FROM financial_records WHERE (kategori='prive') AND YEARWEEK(tanggal, 1) = YEARWEEK('$hariIni', 1)");
 $bebanWeek = mysqli_fetch_assoc($qBebanWeek)['total'] ?? 0;
 
-$qBebanMonth = mysqli_query($conn, "SELECT SUM(jumlah) as total FROM financial_records WHERE (kategori='prive' OR kategori='piutang' OR kategori='cicilan') AND MONTH(tanggal) = MONTH('$hariIni') AND YEAR(tanggal) = YEAR('$hariIni')");
+$qBebanMonth = mysqli_query($conn, "SELECT SUM(jumlah) as total FROM financial_records WHERE (kategori='prive') AND MONTH(tanggal) = MONTH('$hariIni') AND YEAR(tanggal) = YEAR('$hariIni')");
 $bebanMonth = mysqli_fetch_assoc($qBebanMonth)['total'] ?? 0;
 
 $profitToday = $profitKotorToday-$bebanToday;
