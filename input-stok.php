@@ -70,7 +70,8 @@ include 'cek_session.php';
                                 <select name="tahun_terbit" class="w-full border border-gray-300 rounded-lg px-4 py-3 text-sm bg-white focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 outline-none cursor-pointer" required>
                                     <option value="" disabled selected>Pilih Tahun</option>
                                     <?php 
-                                    for($thn = 2020; $thn <= 2026; $thn++) {
+                                        echo "<option value='Retro'>Retro</option>";
+                                    for($thn = 2016; $thn <= 2026; $thn++) {
                                         echo "<option value='$thn'>$thn</option>";
                                     }
                                     ?>

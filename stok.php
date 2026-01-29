@@ -263,7 +263,15 @@ $lastItem = ($offset + $limit < $totalData) ? ($offset + $limit) : $totalData;
                     </div>
                     <div>
                         <label class="block text-sm font-medium text-gray-700 mb-2">Tahun Terbit</label>
-                        <input name="tahun_terbit" id="editTahun" type="number" class="w-full border border-gray-300 rounded-lg p-2.5 text-sm focus:ring-2 focus:ring-emerald-500 outline-none">
+                        <select name="tahun_terbit" id="editTahun" type="number" class="w-full border border-gray-300 rounded-lg p-2.5 text-sm focus:ring-2 focus:ring-emerald-500 outline-none">
+                            <option value="" disabled selected>Pilih Tahun</option>
+                            <?php 
+                                echo "<option value='Retro'>Retro</option>";
+                            for($thn = 2016; $thn <= 2026; $thn++) {
+                                echo "<option value='$thn'>$thn</option>";
+                            }
+                            ?>
+                        </select>
                     </div>
                     <div>
                         <label class="block text-sm font-medium text-gray-700 mb-2">Supplier</label>
