@@ -83,7 +83,7 @@
         AND YEAR(t.tanggal_jual)='$filterTahun'
         GROUP BY t.nama_pembeli
         ORDER BY total_profit DESC
-        LIMIT 3
+        LIMIT 5
     ");
 
     $queryTopSuppliers = mysqli_query($conn, "
@@ -96,7 +96,7 @@
         AND YEAR(tanggal_beli)='$filterTahun'
         GROUP BY nama_reseller
         ORDER BY total_berat DESC
-        LIMIT 3
+        LIMIT 5
     ");
 
     $queryRecent = mysqli_query($conn, "
