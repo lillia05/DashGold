@@ -1,90 +1,118 @@
 <?php
-include 'cek_session.php';
-include 'koneksi.php';
+    include 'cek_session.php';
+    include 'koneksi.php';
 
-date_default_timezone_set('Asia/Jakarta');
-$hariIni = date('Y-m-d'); 
+    date_default_timezone_set('Asia/Jakarta');
+    $hariIni = date('Y-m-d'); 
 
-function format_singkat($angka) {
-    if ($angka >= 1000000000) return number_format($angka / 1000000000, 2, ',', '.') . ' M'; 
-    elseif ($angka >= 1000000) return number_format($angka / 1000000, 1, ',', '.') . ' Jt'; 
-    elseif ($angka >= 1000) return number_format($angka / 1000, 0, ',', '.') . ' Rb'; 
-    return number_format($angka, 0, ',', '.');
-}
+    $array_hari = [
+        'Sunday'=>'Minggu',
+        'Monday'=>'Senin',
+        'Tuesday'=>'Selasa',
+        'Wednesday'=>'Rabu',
+        'Thursday'=>'Kamis',
+        'Friday'=>'Jumat',
+        'Saturday'=>'Sabtu'
+    ];
 
-function getFontSize($angka) {
-    if ($angka >= 1000000000) return 'text-xs md:text-base';
-    elseif ($angka >= 100000000) return 'text-sm md:text-lg';
-    elseif ($angka >= 10000000) return 'text-base md:text-lg';
-    return 'text-lg md:text-lg';
-}
-$qProfitToday = mysqli_query($conn, "SELECT SUM(profit) as total FROM transactions WHERE DATE(tanggal_jual) = '$hariIni'");
-$profitKotorToday = mysqli_fetch_assoc($qProfitToday)['total'] ?? 0;
+    $array_bulan = [
+        1=>'Januari',
+        'Februari',
+        'Maret',
+        'April',
+        'Mei',
+        'Juni',
+        'Juli',
+        'Agustus',
+        'September',
+        'Oktober',
+        'November',
+        'Desember'
+    ];
 
-$qProfitWeek = mysqli_query($conn, "SELECT SUM(profit) as total FROM transactions WHERE YEARWEEK(tanggal_jual, 1) = YEARWEEK('$hariIni', 1)");
-$profitKotorWeek = mysqli_fetch_assoc($qProfitWeek)['total'] ?? 0;
+    function format_singkat($angka) {
+        if ($angka >= 1000000000) return number_format($angka / 1000000000, 2, ',', '.') . ' M'; 
+        elseif ($angka >= 1000000) return number_format($angka / 1000000, 1, ',', '.') . ' Jt'; 
+        elseif ($angka >= 1000) return number_format($angka / 1000, 0, ',', '.') . ' Rb'; 
+        return number_format($angka, 0, ',', '.');
+    }
 
-$qProfitMonth = mysqli_query($conn, "SELECT SUM(profit) as total FROM transactions WHERE MONTH(tanggal_jual) = MONTH('$hariIni') AND YEAR(tanggal_jual) = YEAR('$hariIni')");
-$profitKotorMonth = mysqli_fetch_assoc($qProfitMonth)['total'] ?? 0;
+    function getFontSize($angka) {
+        if ($angka >= 1000000000) return 'text-xs md:text-base';
+        elseif ($angka >= 100000000) return 'text-sm md:text-lg';
+        elseif ($angka >= 10000000) return 'text-base md:text-lg';
+        return 'text-lg md:text-lg';
+    }
 
-$qBebanToday = mysqli_query($conn, "SELECT SUM(jumlah) as total FROM financial_records WHERE (kategori='prive') AND tanggal = '$hariIni'");
-$bebanToday = mysqli_fetch_assoc($qBebanToday)['total'] ?? 0;
+    $qProfitToday = mysqli_query($conn, "SELECT SUM(profit) total FROM transactions WHERE DATE(tanggal_jual)='$hariIni'");
+    $profitKotorToday = ($qProfitToday && ($r=mysqli_fetch_assoc($qProfitToday))) ? $r['total'] : 0;
 
-$qBebanWeek = mysqli_query($conn, "SELECT SUM(jumlah) as total FROM financial_records WHERE (kategori='prive') AND YEARWEEK(tanggal, 1) = YEARWEEK('$hariIni', 1)");
-$bebanWeek = mysqli_fetch_assoc($qBebanWeek)['total'] ?? 0;
+    $qProfitWeek = mysqli_query($conn, "SELECT SUM(profit) total FROM transactions WHERE YEARWEEK(tanggal_jual,1)=YEARWEEK('$hariIni',1)");
+    $profitKotorWeek = ($qProfitWeek && ($r=mysqli_fetch_assoc($qProfitWeek))) ? $r['total'] : 0;
 
-$qBebanMonth = mysqli_query($conn, "SELECT SUM(jumlah) as total FROM financial_records WHERE (kategori='prive') AND MONTH(tanggal) = MONTH('$hariIni') AND YEAR(tanggal) = YEAR('$hariIni')");
-$bebanMonth = mysqli_fetch_assoc($qBebanMonth)['total'] ?? 0;
+    $qProfitMonth = mysqli_query($conn, "SELECT SUM(profit) total FROM transactions WHERE MONTH(tanggal_jual)=MONTH('$hariIni') AND YEAR(tanggal_jual)=YEAR('$hariIni')");
+    $profitKotorMonth = ($qProfitMonth && ($r=mysqli_fetch_assoc($qProfitMonth))) ? $r['total'] : 0;
 
-$profitToday = $profitKotorToday-$bebanToday;
-$profitWeek  = $profitKotorWeek-$bebanWeek;
-$profitMonth = $profitKotorMonth-$bebanMonth; 
+    $qBebanToday = mysqli_query($conn, "SELECT SUM(jumlah) total FROM financial_records WHERE kategori='prive' AND tanggal='$hariIni'");
+    $bebanToday = ($qBebanToday && ($r=mysqli_fetch_assoc($qBebanToday))) ? $r['total'] : 0;
 
-$queryStock = mysqli_query($conn, "SELECT SUM(berat) as total_berat FROM stocks WHERE status = 'available'");
-$rowStock = mysqli_fetch_assoc($queryStock);
-$stockGudang = $rowStock['total_berat'] ?? 0;
+    $qBebanWeek = mysqli_query($conn, "SELECT SUM(jumlah) total FROM financial_records WHERE kategori='prive' AND YEARWEEK(tanggal,1)=YEARWEEK('$hariIni',1)");
+    $bebanWeek = ($qBebanWeek && ($r=mysqli_fetch_assoc($qBebanWeek))) ? $r['total'] : 0;
 
-$queryTopSuppliers = mysqli_query($conn, "SELECT TRIM(supplier) as nama_reseller, 
-                                                 COUNT(id) as total_items,
-                                                 SUM(berat) as total_berat
-                                          FROM stocks
-                                          WHERE status = 'sold' 
-                                          AND MONTH(tanggal_beli) = MONTH('$hariIni') 
-                                          AND YEAR(tanggal_beli) = YEAR('$hariIni')
-                                          GROUP BY nama_reseller 
-                                          ORDER BY total_berat DESC 
-                                          LIMIT 3");
+    $qBebanMonth = mysqli_query($conn, "SELECT SUM(jumlah) total FROM financial_records WHERE kategori='prive' AND MONTH(tanggal)=MONTH('$hariIni') AND YEAR(tanggal)=YEAR('$hariIni')");
+    $bebanMonth = ($qBebanMonth && ($r=mysqli_fetch_assoc($qBebanMonth))) ? $r['total'] : 0;
 
-$queryTopBuyers = mysqli_query($conn, "SELECT t.nama_pembeli, 
-                                              SUM(t.profit) as total_profit,
-                                              SUM(s.berat) as total_berat
-                                       FROM transactions t
-                                       JOIN stocks s ON t.stock_id = s.id
-                                       WHERE MONTH(t.tanggal_jual) = MONTH('$hariIni') 
-                                       AND YEAR(t.tanggal_jual) = YEAR('$hariIni')
-                                       GROUP BY t.nama_pembeli 
-                                       ORDER BY total_profit DESC 
-                                       LIMIT 3");
+    $profitToday = $profitKotorToday - $bebanToday;
+    $profitWeek  = $profitKotorWeek  - $bebanWeek;
+    $profitMonth = $profitKotorMonth - $bebanMonth;
 
-$queryRecent = mysqli_query($conn, "SELECT t.*, s.nama_barang, s.supplier, s.berat 
-                                    FROM transactions t 
-                                    JOIN stocks s ON t.stock_id = s.id 
-                                    ORDER BY t.tanggal_jual DESC, t.id DESC 
-                                    LIMIT 5");
+    $qStock = mysqli_query($conn, "SELECT SUM(berat) total FROM stocks WHERE status='available'");
+    $stockGudang = ($qStock && ($r=mysqli_fetch_assoc($qStock))) ? $r['total'] : 0;
 
-$array_hari = ['Sunday'=>'Minggu', 'Monday'=>'Senin', 'Tuesday'=>'Selasa', 'Wednesday'=>'Rabu', 'Thursday'=>'Kamis', 'Friday'=>'Jumat', 'Saturday'=>'Sabtu'];
-$array_bulan = [1=>'Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember'];
+    $filterBulan = (int)($_GET['bulan'] ?? date('n'));
+    $filterTahun = (int)($_GET['tahun'] ?? date('Y'));
+    $namaBulanPilih = $array_bulan[$filterBulan];
 
-$hari_inggris = date('l'); 
-$bulan_angka = date('n');
-$hari_indo = $array_hari[$hari_inggris]; 
-$bulan_indo = $array_bulan[$bulan_angka]; 
-$tanggal_angka = date('d');
-$tahun_angka = date('Y');
+    $queryTopBuyers = mysqli_query($conn, "
+        SELECT t.nama_pembeli,
+            SUM(t.profit) total_profit,
+            SUM(s.berat) total_berat
+        FROM transactions t
+        JOIN stocks s ON t.stock_id=s.id
+        WHERE MONTH(t.tanggal_jual)='$filterBulan'
+        AND YEAR(t.tanggal_jual)='$filterTahun'
+        GROUP BY t.nama_pembeli
+        ORDER BY total_profit DESC
+        LIMIT 3
+    ");
 
-$tanggal_lengkap_indo = "$hari_indo, $tanggal_angka $bulan_indo $tahun_angka"; 
-$bulan_tahun_indo = "$bulan_indo $tahun_angka"; 
+    $queryTopSuppliers = mysqli_query($conn, "
+        SELECT TRIM(supplier) nama_reseller,
+            COUNT(id) total_items,
+            SUM(berat) total_berat
+        FROM stocks
+        WHERE status='sold'
+        AND MONTH(tanggal_beli)='$filterBulan'
+        AND YEAR(tanggal_beli)='$filterTahun'
+        GROUP BY nama_reseller
+        ORDER BY total_berat DESC
+        LIMIT 3
+    ");
+
+    $queryRecent = mysqli_query($conn, "
+        SELECT t.*, s.nama_barang, s.supplier, s.berat
+        FROM transactions t
+        JOIN stocks s ON t.stock_id=s.id
+        ORDER BY t.tanggal_jual DESC, t.id DESC
+        LIMIT 5
+    ");
+
+    $hari_indo = $array_hari[date('l')];
+    $bulan_indo = $array_bulan[date('n')];
+    $tanggal_lengkap_indo = "$hari_indo, ".date('d')." $bulan_indo ".date('Y');
+    $bulan_tahun_indo = "$bulan_indo ".date('Y');
 ?>
+
 
 <!DOCTYPE html>
 <html lang="id">
@@ -279,6 +307,32 @@ $bulan_tahun_indo = "$bulan_indo $tahun_angka";
                 </div>
             </div>
 
+            <div class="mb-4 flex flex-col md:flex-row justify-between items-center gap-4 bg-white p-4 rounded-xl border border-gray-200 shadow-sm">
+                <div>
+                    <h3 class="font-bold text-gray-800 text-sm">Filter Top Peringkat</h3>
+                    <p class="text-xs text-gray-500">Pilih periode untuk melihat Top Reseller & Pembeli.</p>
+                </div>
+                <form method="GET" class="flex gap-2">
+                    <select name="bulan" class="border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-emerald-500 outline-none">
+                        <?php foreach($array_bulan as $k => $v) { 
+                            $selected = ($k == $filterBulan) ? 'selected' : '';
+                            echo "<option value='$k' $selected>$v</option>";
+                        } ?>
+                    </select>
+                    <select name="tahun" class="border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-emerald-500 outline-none">
+                        <?php 
+                        $tahunSkrg = date('Y');
+                        for($t = $tahunSkrg; $t >= $tahunSkrg - 5; $t--) {
+                            $selected = ($t == $filterTahun) ? 'selected' : '';
+                            echo "<option value='$t' $selected>$t</option>";
+                        } 
+                        ?>
+                    </select>
+                    <button type="submit" class="bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-2 px-4 rounded-lg text-sm transition">
+                        Filter
+                    </button>
+                </form>
+            </div>
 
             <div class="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden mb-8">
                         <div class="px-6 py-4 border-b border-gray-100 flex justify-between items-center bg-purple-50">
@@ -286,9 +340,8 @@ $bulan_tahun_indo = "$bulan_indo $tahun_angka";
                                 <div class="p-1.5 bg-purple-100 rounded-md text-purple-600">
                                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"></path></svg>
                                 </div>
-                                <h3 class="font-bold text-gray-900 text-sm">Top Reseller Bulan Ini</h3>
+                                <h3 class="font-bold text-gray-900 text-sm">Top Reseller</h3>
                             </div>
-                            <span class="text-xs font-medium text-purple-600"><?php echo $bulan_tahun_indo; ?></span>
                         </div>
                         <div class="overflow-x-auto">
                             <table class="w-full text-left whitespace-nowrap text-sm">
@@ -334,9 +387,8 @@ $bulan_tahun_indo = "$bulan_indo $tahun_angka";
                         <div class="p-1.5 bg-pink-100 rounded-md text-pink-600">
                             <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path></svg>
                         </div>
-                        <h3 class="font-bold text-gray-900 text-sm">Top Pembeli Bulan Ini</h3>
+                        <h3 class="font-bold text-gray-900 text-sm">Top Pembeli</h3>
                     </div>
-                    <span class="text-xs font-medium text-pink-600"><?php echo $bulan_tahun_indo; ?></span>
                 </div>
                 <div class="overflow-x-auto">
                     <table class="w-full text-left whitespace-nowrap text-sm">
